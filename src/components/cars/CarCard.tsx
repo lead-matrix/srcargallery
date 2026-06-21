@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button'
 import { formatPriceEn, formatMileage } from '@/lib/utils'
 import type { CarWithImages } from '@/types/database'
 import { motion } from 'framer-motion'
+import { useLanguageStore } from '@/store/languageStore'
+import { t } from '@/lib/translations'
 
 interface CarCardProps {
   car: CarWithImages
@@ -15,12 +17,15 @@ interface CarCardProps {
 
 export default function CarCard({ car, onFavorite, isFavorited = false, index = 0 }: CarCardProps) {
   const thumbnail = car.thumbnail_url || car.car_images?.[0]?.url || 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800'
+  const { lang } = useLanguageStore()
+  const tr = t[lang]
+  const bn = lang === 'bn'
 
   const statusBadge = {
     available: null,
-    reserved: <Badge variant="reserved">Reserved</Badge>,
-    sold: <Badge variant="sold">Sold</Badge>,
-    inspection: <Badge variant="negotiable">In Inspection</Badge>,
+    reserved: <Badge variant="reserved">{bn ? 'বুকড' : 'Reserved'}</Badge>,
+    sold: <Badge variant="sold">{bn ? 'বিক্রিত' : 'Sold'}</Badge>,
+    inspection: <Badge variant="negotiable">{bn ? 'পরীক্ষাধীন' : 'In Inspection'}</Badge>,
   }[car.status]
 
   return (
@@ -47,12 +52,12 @@ export default function CarCard({ car, onFavorite, isFavorited = false, index = 
           {car.certified && (
             <Badge variant="certified" className="flex items-center gap-1">
               <ShieldCheck className="w-3 h-3" />
-              Certified
+              {bn ? 'সার্টিফাইড' : 'Certified'}
             </Badge>
           )}
-          {car.just_arrived && <Badge variant="new">Just Arrived</Badge>}
+          {car.just_arrived && <Badge variant="new">{bn ? 'নতুন' : 'Just Arrived'}</Badge>}
           {statusBadge}
-          {car.fuel_type === 'hybrid' && <Badge variant="hybrid">Hybrid</Badge>}
+          {car.fuel_type === 'hybrid' && <Badge variant="hybrid">{bn ? 'হাইব্রিড' : 'Hybrid'}</Badge>}
         </div>
 
         {/* Favorite button */}
@@ -74,7 +79,7 @@ export default function CarCard({ car, onFavorite, isFavorited = false, index = 
         {/* Negotiable badge */}
         {car.negotiable && (
           <div className="absolute bottom-3 right-3">
-            <Badge variant="negotiable">Negotiable</Badge>
+            <Badge variant="negotiable">{bn ? 'আলোচনা সাপেক্ষ' : 'Negotiable'}</Badge>
           </div>
         )}
       </div>
@@ -85,18 +90,17 @@ export default function CarCard({ car, onFavorite, isFavorited = false, index = 
         <div className="flex items-start justify-between mb-3">
           <div className="flex-1 min-w-0 pr-2">
             <h3 className="font-heading font-bold text-white text-lg leading-tight truncate group-hover:text-orange-400 transition-colors">
-              {car.title}
+              {bn && car.title_bn ? car.title_bn : car.title}
             </h3>
-            {car.title_bn && (
-              <p className="text-platinum-400 text-xs font-bengali mt-0.5">{car.title_bn}</p>
-            )}
           </div>
           <div className="text-right flex-shrink-0">
             <div className="font-heading font-black text-orange-400 text-xl">
-              {formatPriceEn(car.price)}
+              {bn ? `৳${(car.price / 100000).toFixed(0)} লাখ` : formatPriceEn(car.price)}
             </div>
             {car.negotiable && (
-              <div className="text-xs text-platinum-500">Negotiable</div>
+              <div className={`text-xs text-platinum-500 ${bn ? 'font-bengali' : ''}`}>
+                {bn ? 'আলোচনা সাপেক্ষ' : 'Negotiable'}
+              </div>
             )}
           </div>
         </div>
@@ -105,33 +109,41 @@ export default function CarCard({ car, onFavorite, isFavorited = false, index = 
         <div className="grid grid-cols-2 gap-2 mb-4">
           <div className="flex items-center gap-2 text-sm text-platinum-400">
             <Calendar className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
-            <span>{car.year}</span>
+            <span className={bn ? 'font-bengali' : ''}>
+              {bn ? `${car.year} সাল` : car.year}
+            </span>
           </div>
           <div className="flex items-center gap-2 text-sm text-platinum-400">
             <Gauge className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
-            <span>{formatMileage(car.mileage)}</span>
+            <span className={bn ? 'font-bengali' : ''}>
+              {bn ? formatMileage(car.mileage).replace('km', 'কিমি') : formatMileage(car.mileage)}
+            </span>
           </div>
           <div className="flex items-center gap-2 text-sm text-platinum-400">
             <Fuel className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
-            <span className="capitalize">{car.fuel_type}</span>
+            <span className={`capitalize ${bn ? 'font-bengali' : ''}`}>
+              {bn ? (car.fuel_type === 'petrol' ? 'অকটেন' : car.fuel_type === 'hybrid' ? 'হাইব্রিড' : 'ডিজেল') : car.fuel_type}
+            </span>
           </div>
           <div className="flex items-center gap-2 text-sm text-platinum-400">
             <Settings className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
-            <span className="capitalize">{car.transmission}</span>
+            <span className={`capitalize ${bn ? 'font-bengali' : ''}`}>
+              {bn ? (car.transmission === 'automatic' ? 'অটোমেটিক' : 'ম্যানুয়াল') : car.transmission}
+            </span>
           </div>
         </div>
 
         {/* Location */}
-        <div className="flex items-center gap-2 text-xs text-platinum-500 mb-4">
+        <div className={`flex items-center gap-2 text-xs text-platinum-500 mb-4 ${bn ? 'font-bengali' : ''}`}>
           <MapPin className="w-3 h-3" />
-          <span>Agargaon Taltola, Dhaka</span>
+          <span>{bn ? 'আগারগাঁও তালতলা, ঢাকা' : 'Agargaon Taltola, Dhaka'}</span>
         </div>
 
         {/* Actions */}
         <div className="flex gap-2">
           <Button asChild className="flex-1 text-sm" size="sm">
-            <Link to={`/cars/${car.id}`}>
-              View Details
+            <Link to={`/cars/${car.id}`} className={bn ? 'font-bengali' : ''}>
+              {tr.cars_view_details}
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </Button>

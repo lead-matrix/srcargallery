@@ -7,6 +7,8 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { BRANDS } from '@/types/database'
+import { useLanguageStore } from '@/store/languageStore'
+import { t } from '@/lib/translations'
 
 type Step = 'brand' | 'model_year' | 'mileage' | 'fuel_cond' | 'result'
 
@@ -34,6 +36,10 @@ export default function ValuationPage() {
   const [fuel, setFuel] = useState('hybrid')
   const [condition, setCondition] = useState('Excellent')
   const [calculatedRange, setCalculatedRange] = useState({ min: 0, max: 0, base: 0 })
+
+  const { lang } = useLanguageStore()
+  const tr = t[lang]
+  const bn = lang === 'bn'
 
   const currentYear = new Date().getFullYear()
   const years = Array.from({ length: 20 }, (_, i) => currentYear - i)
@@ -80,6 +86,9 @@ export default function ValuationPage() {
   }
 
   const formatPrice = (price: number) => {
+    if (bn) {
+      return `৳${(price / 100000).toFixed(0)} লাখ`
+    }
     return new Intl.NumberFormat('en-BD', {
       style: 'currency',
       currency: 'BDT',
@@ -98,7 +107,7 @@ export default function ValuationPage() {
   return (
     <>
       <Helmet>
-        <title>AI Car Valuation | SR Car Gallery</title>
+        <title>{tr.val_title} | SR Car Gallery</title>
         <meta name="description" content="Use our smart AI algorithm to estimate the fair market price of your used car in Dhaka. Takes less than a minute." />
       </Helmet>
 
@@ -108,8 +117,8 @@ export default function ValuationPage() {
           {/* Progress bar */}
           {step !== 'result' && (
             <div className="mb-8">
-              <div className="flex justify-between items-center text-xs text-platinum-500 mb-2">
-                <span>VALUATION PROGRESS</span>
+              <div className={`flex justify-between items-center text-xs text-platinum-500 mb-2 ${bn ? 'font-bengali' : ''}`}>
+                <span>{bn ? 'মূল্যায়ন অগ্রগতি' : 'VALUATION PROGRESS'}</span>
                 <span>{progress()}%</span>
               </div>
               <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
@@ -134,8 +143,12 @@ export default function ValuationPage() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                 >
-                  <h2 className="font-heading text-2xl font-bold mb-2">Select Your Car's Brand</h2>
-                  <p className="text-sm text-platinum-400 mb-8">What is the manufacturer of your car?</p>
+                  <h2 className={`font-heading text-2xl font-bold mb-2 ${bn ? 'font-bengali' : ''}`}>
+                    {bn ? 'আপনার গাড়ির ব্র্যান্ড নির্বাচন করুন' : "Select Your Car's Brand"}
+                  </h2>
+                  <p className={`text-sm text-platinum-400 mb-8 ${bn ? 'font-bengali' : ''}`}>
+                    {bn ? 'আপনার গাড়িটি কোন ব্র্যান্ডের বা প্রস্তুতকারকের?' : 'What is the manufacturer of your car?'}
+                  </p>
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {BRANDS.map((b) => (
@@ -168,38 +181,42 @@ export default function ValuationPage() {
                   className="space-y-6"
                 >
                   <div>
-                    <h2 className="font-heading text-2xl font-bold mb-2">Model & Manufacturing Year</h2>
-                    <p className="text-sm text-platinum-400">Specify details about your {brand}</p>
+                    <h2 className={`font-heading text-2xl font-bold mb-2 ${bn ? 'font-bengali' : ''}`}>
+                      {bn ? 'মডেল ও উৎপাদন বছর' : 'Model & Manufacturing Year'}
+                    </h2>
+                    <p className={`text-sm text-platinum-400 ${bn ? 'font-bengali' : ''}`}>
+                      {bn ? `আপনার ${brand} গাড়ির বিবরণ দিন` : `Specify details about your ${brand}`}
+                    </p>
                   </div>
 
                   <div>
-                    <label className="block text-sm text-platinum-400 mb-2">Model Name</label>
+                    <label className={`block text-sm text-platinum-400 mb-2 ${bn ? 'font-bengali' : ''}`}>{bn ? 'মডেলের নাম' : 'Model Name'}</label>
                     <input
                       type="text"
                       value={model}
                       onChange={e => setModel(e.target.value)}
                       placeholder="e.g. Premio, Vezel, Axio"
-                      className="input-dark w-full text-lg"
+                      className={`input-dark w-full text-lg ${bn ? 'font-bengali' : ''}`}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm text-platinum-400 mb-2">Manufacturing Year</label>
+                    <label className={`block text-sm text-platinum-400 mb-2 ${bn ? 'font-bengali' : ''}`}>{bn ? 'ম্যানুফ্যাকচারিং বছর' : 'Manufacturing Year'}</label>
                     <select
                       value={year}
                       onChange={e => setYear(parseInt(e.target.value))}
-                      className="input-dark w-full text-lg"
+                      className={`input-dark w-full text-lg ${bn ? 'font-bengali' : ''}`}
                     >
                       {years.map(y => <option key={y} value={y}>{y}</option>)}
                     </select>
                   </div>
 
                   <div className="flex gap-4 pt-4 border-t border-white/5">
-                    <Button onClick={handleBack} variant="outline" className="flex-1">
-                      <ArrowLeft className="w-4 h-4 mr-2" /> Back
+                    <Button onClick={handleBack} variant="outline" className={`flex-1 ${bn ? 'font-bengali' : ''}`}>
+                      <ArrowLeft className="w-4 h-4 mr-2" /> {bn ? 'পেছনে' : 'Back'}
                     </Button>
-                    <Button onClick={handleNext} disabled={!model} className="flex-1">
-                      Next <ArrowRight className="w-4 h-4 ml-2" />
+                    <Button onClick={handleNext} disabled={!model} className={`flex-1 ${bn ? 'font-bengali' : ''}`}>
+                      {bn ? 'পরবর্তী' : 'Next'} <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </div>
                 </motion.div>
@@ -215,28 +232,32 @@ export default function ValuationPage() {
                   className="space-y-6"
                 >
                   <div>
-                    <h2 className="font-heading text-2xl font-bold mb-2">How much has it been driven?</h2>
-                    <p className="text-sm text-platinum-400">Provide the total mileage in kilometers</p>
+                    <h2 className={`font-heading text-2xl font-bold mb-2 ${bn ? 'font-bengali' : ''}`}>
+                      {bn ? 'গাড়িটি কত কিলোমিটার চলেছে?' : 'How much has it been driven?'}
+                    </h2>
+                    <p className={`text-sm text-platinum-400 ${bn ? 'font-bengali' : ''}`}>
+                      {bn ? 'মোট মাইলেজটি কিলোমিটারে লিখুন' : 'Provide the total mileage in kilometers'}
+                    </p>
                   </div>
 
                   <div>
-                    <label className="block text-sm text-platinum-400 mb-2">Mileage (km)</label>
+                    <label className={`block text-sm text-platinum-400 mb-2 ${bn ? 'font-bengali' : ''}`}>{bn ? 'মাইলেজ (কিমি)' : 'Mileage (km)'}</label>
                     <input
                       type="number"
                       value={mileage}
                       onChange={e => setMileage(e.target.value)}
                       placeholder="e.g. 45000"
-                      className="input-dark w-full text-lg"
+                      className={`input-dark w-full text-lg ${bn ? 'font-bengali' : ''}`}
                       min="0"
                     />
                   </div>
 
                   <div className="flex gap-4 pt-4 border-t border-white/5">
-                    <Button onClick={handleBack} variant="outline" className="flex-1">
-                      <ArrowLeft className="w-4 h-4 mr-2" /> Back
+                    <Button onClick={handleBack} variant="outline" className={`flex-1 ${bn ? 'font-bengali' : ''}`}>
+                      <ArrowLeft className="w-4 h-4 mr-2" /> {bn ? 'পেছনে' : 'Back'}
                     </Button>
-                    <Button onClick={handleNext} disabled={!mileage} className="flex-1">
-                      Next <ArrowRight className="w-4 h-4 ml-2" />
+                    <Button onClick={handleNext} disabled={!mileage} className={`flex-1 ${bn ? 'font-bengali' : ''}`}>
+                      {bn ? 'পরবর্তী' : 'Next'} <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </div>
                 </motion.div>
@@ -252,44 +273,48 @@ export default function ValuationPage() {
                   className="space-y-6"
                 >
                   <div>
-                    <h2 className="font-heading text-2xl font-bold mb-2">Fuel Type & Condition</h2>
-                    <p className="text-sm text-platinum-400">Final details for AI valuation</p>
+                    <h2 className={`font-heading text-2xl font-bold mb-2 ${bn ? 'font-bengali' : ''}`}>
+                      {bn ? 'জ্বালানি ধরণ ও সাধারণ অবস্থা' : 'Fuel Type & Condition'}
+                    </h2>
+                    <p className={`text-sm text-platinum-400 ${bn ? 'font-bengali' : ''}`}>
+                      {bn ? 'মূল্যায়নের জন্য চূড়ান্ত বিবরণ দিন' : 'Final details for AI valuation'}
+                    </p>
                   </div>
 
                   <div>
-                    <label className="block text-sm text-platinum-400 mb-2">Fuel Type</label>
+                    <label className={`block text-sm text-platinum-400 mb-2 ${bn ? 'font-bengali' : ''}`}>{bn ? 'জ্বালানির ধরণ' : 'Fuel Type'}</label>
                     <select
                       value={fuel}
                       onChange={e => setFuel(e.target.value)}
-                      className="input-dark w-full text-lg"
+                      className={`input-dark w-full text-lg ${bn ? 'font-bengali' : ''}`}
                     >
-                      <option value="hybrid">Hybrid</option>
-                      <option value="petrol">Octane / Petrol</option>
-                      <option value="diesel">Diesel</option>
-                      <option value="cng">CNG / LPG</option>
+                      <option value="hybrid">{bn ? 'হাইব্রিড' : 'Hybrid'}</option>
+                      <option value="petrol">{bn ? 'অকটেন / পেট্রোল' : 'Octane / Petrol'}</option>
+                      <option value="diesel">{bn ? 'ডিজেল' : 'Diesel'}</option>
+                      <option value="cng">{bn ? 'সিএনজি / এলপিজি' : 'CNG / LPG'}</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-sm text-platinum-400 mb-2">General Condition</label>
+                    <label className={`block text-sm text-platinum-400 mb-2 ${bn ? 'font-bengali' : ''}`}>{bn ? 'সাধারণ অবস্থা' : 'General Condition'}</label>
                     <select
                       value={condition}
                       onChange={e => setCondition(e.target.value)}
-                      className="input-dark w-full text-lg"
+                      className={`input-dark w-full text-lg ${bn ? 'font-bengali' : ''}`}
                     >
-                      <option value="Excellent">Excellent (No repair needed)</option>
-                      <option value="Good">Good (Minor cosmetic work)</option>
-                      <option value="Fair">Fair (Needs styling/repair)</option>
-                      <option value="Needs Work">Needs Mechanical Work</option>
+                      <option value="Excellent">{bn ? 'চমৎকার (মেরামতের প্রয়োজন নেই)' : 'Excellent (No repair needed)'}</option>
+                      <option value="Good">{bn ? 'ভালো (হালকা বাহ্যিক কাজ আছে)' : 'Good (Minor cosmetic work)'}</option>
+                      <option value="Fair">{bn ? 'মোটামুটি (মেরামত প্রয়োজন)' : 'Fair (Needs styling/repair)'}</option>
+                      <option value="Needs Work">{bn ? 'মেরামত প্রয়োজন (যান্ত্রিক সমস্যা আছে)' : 'Needs Mechanical Work'}</option>
                     </select>
                   </div>
 
                   <div className="flex gap-4 pt-4 border-t border-white/5">
-                    <Button onClick={handleBack} variant="outline" className="flex-1">
-                      <ArrowLeft className="w-4 h-4 mr-2" /> Back
+                    <Button onClick={handleBack} variant="outline" className={`flex-1 ${bn ? 'font-bengali' : ''}`}>
+                      <ArrowLeft className="w-4 h-4 mr-2" /> {bn ? 'পেছনে' : 'Back'}
                     </Button>
-                    <Button onClick={handleNext} className="flex-1">
-                      Estimate Price <TrendingUp className="w-4 h-4 ml-2" />
+                    <Button onClick={handleNext} className={`flex-1 ${bn ? 'font-bengali' : ''}`}>
+                      {bn ? 'মূল্য নির্ধারণ করুন' : 'Estimate Price'} <TrendingUp className="w-4 h-4 ml-2" />
                     </Button>
                   </div>
                 </motion.div>
@@ -307,40 +332,54 @@ export default function ValuationPage() {
                     <div className="w-16 h-16 rounded-2xl bg-orange-500/20 text-orange-400 flex items-center justify-center mx-auto mb-4">
                       <ShieldCheck className="w-8 h-8" />
                     </div>
-                    <span className="text-orange-400 text-xs font-bold tracking-widest uppercase">Estimated Fair Value Range</span>
+                    <span className={`text-orange-400 text-xs font-bold tracking-widest uppercase ${bn ? 'font-bengali' : ''}`}>
+                      {bn ? 'আনুমানিক ন্যায্য মূল্য সীমা' : 'Estimated Fair Value Range'}
+                    </span>
                     <h2 className="font-heading text-4xl md:text-5xl font-black text-white mt-2">
                       {formatPrice(calculatedRange.min)} - {formatPrice(calculatedRange.max)}
                     </h2>
-                    <p className="text-sm text-platinum-400 mt-2">
-                      For a {year} {brand} {model} ({mileage} km)
+                    <p className={`text-sm text-platinum-400 mt-2 ${bn ? 'font-bengali' : ''}`}>
+                      {bn ? (
+                        <>একটি {year} সালের {brand} {model} ({mileage} কিমি চালানো) এর জন্য</>
+                      ) : (
+                        <>For a {year} {brand} {model} ({mileage} km)</>
+                      )}
                     </p>
                   </div>
 
                   {/* Pricing metrics breakdown */}
                   <div className="glass rounded-2xl border border-white/5 p-6 text-left space-y-4">
                     <div className="flex justify-between items-center text-sm border-b border-white/5 pb-2">
-                      <span className="text-platinum-400">Base Brand Value</span>
+                      <span className={`text-platinum-400 ${bn ? 'font-bengali' : ''}`}>{bn ? 'ভিত্তি ব্র্যান্ড মূল্য' : 'Base Brand Value'}</span>
                       <span className="text-white font-bold">{formatPrice(baseBrandValues[brand] || 2000000)}</span>
                     </div>
                     <div className="flex justify-between items-center text-sm border-b border-white/5 pb-2">
-                      <span className="text-platinum-400">Age Depreciation ({currentYear - year} years)</span>
+                      <span className={`text-platinum-400 ${bn ? 'font-bengali' : ''}`}>
+                        {bn ? `বয়সভিত্তিক অবমূল্যায়ন (${currentYear - year} বছর)` : `Age Depreciation (${currentYear - year} years)`}
+                      </span>
                       <span className="text-red-400">-{Math.round((1 - (calculatedRange.base / (baseBrandValues[brand] || 2000000))) * 100)}%</span>
                     </div>
                     <div className="flex justify-between items-center text-sm">
-                      <span className="text-platinum-400">Condition Rating</span>
-                      <span className="text-emerald-400 font-semibold">{condition}</span>
+                      <span className={`text-platinum-400 ${bn ? 'font-bengali' : ''}`}>{bn ? 'গাড়ির অবস্থা মান' : 'Condition Rating'}</span>
+                      <span className={`text-emerald-400 font-semibold ${bn ? 'font-bengali' : ''}`}>
+                        {bn ? (
+                          condition === 'Excellent' ? 'চমৎকার' :
+                          condition === 'Good' ? 'ভালো' :
+                          condition === 'Fair' ? 'মোটামুটি' : 'মেরামতযোগ্য'
+                        ) : condition}
+                      </span>
                     </div>
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button onClick={() => setStep('brand')} variant="outline" className="flex-1">
-                      New Valuation
+                    <Button onClick={() => setStep('brand')} variant="outline" className={`flex-1 ${bn ? 'font-bengali' : ''}`}>
+                      {bn ? 'নতুন মূল্যায়ন' : 'New Valuation'}
                     </Button>
                     <a 
                       href={`/sell?brand=${brand}&model=${model}&year=${year}&mileage=${mileage}`} 
-                      className="btn-primary flex-1 inline-flex items-center justify-center"
+                      className={`btn-primary flex-1 inline-flex items-center justify-center ${bn ? 'font-bengali' : ''}`}
                     >
-                      Sell This Car Now
+                      {bn ? 'গাড়িটি এখনই বিক্রি করুন' : 'Sell This Car Now'}
                     </a>
                   </div>
                 </motion.div>

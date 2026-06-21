@@ -1,32 +1,35 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { Menu, X, Phone, ChevronDown, Heart, Search } from 'lucide-react'
+import { Menu, X, Phone, ChevronDown, Heart, Search, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
-
-const navLinks = [
-  { href: '/cars', label: 'Buy a Car', label_bn: 'গাড়ি কিনুন' },
-  { href: '/sell', label: 'Sell Your Car', label_bn: 'গাড়ি বেচুন' },
-  {
-    href: '/valuation',
-    label: 'Valuation',
-    label_bn: 'মূল্যায়ন',
-    children: [
-      { href: '/valuation', label: 'Car Valuation', label_bn: 'গাড়ির মূল্যায়ন' },
-      { href: '/book-inspection', label: 'Book Inspection', label_bn: 'ইন্সপেকশন বুক' },
-    ],
-  },
-  { href: '/compare', label: 'Compare', label_bn: 'তুলনা' },
-  { href: '/blog', label: 'Blog', label_bn: 'ব্লগ' },
-  { href: '/about', label: 'About Us', label_bn: 'আমাদের সম্পর্কে' },
-]
+import { useLanguageStore } from '@/store/languageStore'
+import { t } from '@/lib/translations'
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const location = useLocation()
+  const { lang, toggle } = useLanguageStore()
+  const tr = t[lang]
+
+  const navLinks = [
+    { href: '/cars', label: tr.nav_buy },
+    { href: '/sell', label: tr.nav_sell },
+    {
+      href: '/valuation',
+      label: tr.nav_valuation,
+      children: [
+        { href: '/valuation', label: tr.nav_valuation },
+        { href: '/book-inspection', label: tr.nav_inspection },
+      ],
+    },
+    { href: '/compare', label: tr.nav_compare },
+    { href: '/blog', label: tr.nav_blog },
+    { href: '/about', label: tr.nav_about },
+  ]
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 20)
@@ -43,7 +46,11 @@ export default function Header() {
     <>
       {/* Top bar */}
       <div className="bg-orange-500 text-white text-xs py-2 px-4 hidden md:flex items-center justify-between">
-        <span className="font-bengali">ঢাকার বিশ্বস্ত গাড়ির শোরুম | D-19 B, Agargaon Taltola, Dhaka-1207</span>
+        <span className={lang === 'bn' ? 'font-bengali' : ''}>
+          {lang === 'bn'
+            ? 'ঢাকার বিশ্বস্ত গাড়ির শোরুম | D-19 B, Agargaon Taltola, Dhaka-1207'
+            : "Dhaka's trusted car showroom | D-19 B, Agargaon Taltola, Dhaka-1207"}
+        </span>
         <div className="flex items-center gap-4">
           <a href="tel:+8801401238019" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
             <Phone className="w-3 h-3" />
@@ -93,6 +100,7 @@ export default function Header() {
                     to={link.href}
                     className={cn(
                       'flex items-center gap-1 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200',
+                      lang === 'bn' ? 'font-bengali' : '',
                       location.pathname === link.href || location.pathname.startsWith(link.href + '/')
                         ? 'text-orange-400 bg-orange-500/10'
                         : 'text-platinum-300 hover:text-white hover:bg-white/5'
@@ -116,10 +124,12 @@ export default function Header() {
                           <Link
                             key={child.href}
                             to={child.href}
-                            className="block px-4 py-3 text-sm text-platinum-300 hover:text-white hover:bg-white/5 transition-colors"
+                            className={cn(
+                              'block px-4 py-3 text-sm text-platinum-300 hover:text-white hover:bg-white/5 transition-colors',
+                              lang === 'bn' ? 'font-bengali' : ''
+                            )}
                           >
                             {child.label}
-                            <div className="text-xs text-platinum-500 font-bengali">{child.label_bn}</div>
                           </Link>
                         ))}
                       </motion.div>
@@ -131,6 +141,19 @@ export default function Header() {
 
             {/* Right actions */}
             <div className="flex items-center gap-2">
+              {/* Language Toggle */}
+              <button
+                onClick={toggle}
+                id="lang-toggle-btn"
+                aria-label="Toggle language"
+                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-orange-500/40 text-orange-400 hover:bg-orange-500/10 hover:border-orange-500 transition-all duration-200"
+              >
+                <Globe className="w-3.5 h-3.5" />
+                <span className={lang === 'bn' ? '' : 'font-bengali'}>
+                  {tr.language_toggle}
+                </span>
+              </button>
+
               <Link
                 to="/cars"
                 className="hidden md:flex items-center justify-center w-10 h-10 rounded-xl text-platinum-400 hover:text-white hover:bg-white/5 transition-all"
@@ -150,7 +173,7 @@ export default function Header() {
                 size="sm"
                 className="hidden md:flex"
               >
-                <Link to="/sell">Sell Your Car</Link>
+                <Link to="/sell" className={lang === 'bn' ? 'font-bengali' : ''}>{tr.nav_sell}</Link>
               </Button>
               <Button
                 asChild
@@ -196,15 +219,13 @@ export default function Header() {
                       to={link.href}
                       className={cn(
                         'flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200',
+                        lang === 'bn' ? 'font-bengali' : '',
                         location.pathname === link.href
                           ? 'text-orange-400 bg-orange-500/10'
                           : 'text-platinum-300 hover:text-white hover:bg-white/5'
                       )}
                     >
-                      <div>
-                        <div>{link.label}</div>
-                        <div className="text-xs text-platinum-500 font-bengali">{link.label_bn}</div>
-                      </div>
+                      {link.label}
                     </Link>
                     {link.children && (
                       <div className="ml-4 mt-1 space-y-1">
@@ -212,7 +233,10 @@ export default function Header() {
                           <Link
                             key={child.href}
                             to={child.href}
-                            className="block px-4 py-2 rounded-xl text-sm text-platinum-400 hover:text-white hover:bg-white/5 transition-colors"
+                            className={cn(
+                              'block px-4 py-2 rounded-xl text-sm text-platinum-400 hover:text-white hover:bg-white/5 transition-colors',
+                              lang === 'bn' ? 'font-bengali' : ''
+                            )}
                           >
                             {child.label}
                           </Link>
@@ -222,13 +246,23 @@ export default function Header() {
                   </div>
                 ))}
                 <div className="pt-3 flex flex-col gap-2">
+                  {/* Language toggle in mobile */}
+                  <button
+                    onClick={toggle}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold border border-orange-500/40 text-orange-400 hover:bg-orange-500/10 transition-all"
+                  >
+                    <Globe className="w-4 h-4" />
+                    <span className={lang === 'bn' ? '' : 'font-bengali'}>
+                      {tr.language_toggle}
+                    </span>
+                  </button>
                   <Button asChild className="w-full">
-                    <Link to="/sell">Sell Your Car</Link>
+                    <Link to="/sell" className={lang === 'bn' ? 'font-bengali' : ''}>{tr.nav_sell}</Link>
                   </Button>
                   <Button asChild variant="glass" className="w-full">
                     <a href="tel:+8801401238019">
                       <Phone className="w-4 h-4" />
-                      Call Now
+                      {lang === 'bn' ? 'এখনই কল করুন' : 'Call Now'}
                     </a>
                   </Button>
                 </div>

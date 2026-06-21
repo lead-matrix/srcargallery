@@ -3,16 +3,20 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, ShieldCheck, Zap, Phone, Search, TrendingUp } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useEffect, useRef } from 'react'
-
-const stats = [
-  { value: '500+', label: 'Cars Sold', label_bn: 'গাড়ি বিক্রি' },
-  { value: '2000+', label: 'Happy Customers', label_bn: 'সন্তুষ্ট গ্রাহক' },
-  { value: '98%', label: 'Satisfaction Rate', label_bn: 'সন্তুষ্টির হার' },
-  { value: '3 Days', label: 'Avg. Sale Time', label_bn: 'গড় বিক্রয় সময়' },
-]
+import { useLanguageStore } from '@/store/languageStore'
+import { t } from '@/lib/translations'
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const { lang } = useLanguageStore()
+  const tr = t[lang]
+
+  const stats = [
+    { value: '500+', label: tr.hero_stat_sold },
+    { value: '2000+', label: tr.hero_stat_happy },
+    { value: '98%', label: lang === 'bn' ? 'সন্তুষ্টির হার' : 'Satisfaction Rate' },
+    { value: '3 Days', label: lang === 'bn' ? 'গড় বিক্রয় সময়' : 'Avg. Sale Time' },
+  ]
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -114,8 +118,9 @@ export default function Hero() {
               className="inline-flex items-center gap-2 glass border border-orange-500/20 rounded-full px-4 py-2 mb-6"
             >
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-              <span className="text-orange-300 text-sm font-medium">Dhaka's Most Trusted Car Gallery</span>
-              <span className="text-platinum-500 text-sm font-bengali">| বিশ্বস্ত গাড়ির শোরুম</span>
+              <span className="text-orange-300 text-sm font-medium">
+                {lang === 'bn' ? "ঢাকার সবচেয়ে বিশ্বস্ত গাড়ির শোরুম" : "Dhaka's Most Trusted Car Gallery"}
+              </span>
             </motion.div>
 
             {/* Headline */}
@@ -123,33 +128,23 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-heading text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] mb-6"
+              className={`font-heading text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05] mb-6 ${lang === 'bn' ? 'font-bengali' : ''}`}
             >
-              Buy Smart.{' '}
-              <span className="text-gradient">Sell Fast.</span>
-              <br />
-              Drive Happy.
+              {lang === 'bn' ? (
+                <>স্মার্টভাবে কিনুন।{' '}<span className="text-gradient">দ্রুত বেচুন।</span><br />সুখে চালান।</>
+              ) : (
+                <>Buy Smart.{' '}<span className="text-gradient">Sell Fast.</span><br />Drive Happy.</>
+              )}
             </motion.h1>
-
-            {/* Bengali headline */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="font-bengali text-xl text-orange-300 mb-4"
-            >
-              স্মার্টভাবে কিনুন। দ্রুত বেচুন। সুখে চালান।
-            </motion.p>
 
             {/* Subheading */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="text-platinum-300 text-lg leading-relaxed mb-8 max-w-xl"
+              className={`text-platinum-300 text-lg leading-relaxed mb-8 max-w-xl ${lang === 'bn' ? 'font-bengali' : ''}`}
             >
-              SR Car Gallery buys quality used cars across Bangladesh and offers carefully inspected vehicles
-              at competitive prices. Simple, transparent, and hassle-free.
+              {tr.hero_subheading}
             </motion.p>
 
             {/* CTA Buttons */}
@@ -160,21 +155,21 @@ export default function Hero() {
               className="flex flex-wrap gap-4 mb-10"
             >
               <Button asChild size="xl" className="shadow-glow-orange">
-                <Link to="/cars">
+                <Link to="/cars" className={lang === 'bn' ? 'font-bengali' : ''}>
                   <Search className="w-5 h-5" />
-                  View Cars
+                  {tr.hero_btn_buy}
                 </Link>
               </Button>
               <Button asChild size="xl" variant="outline">
-                <Link to="/sell">
+                <Link to="/sell" className={lang === 'bn' ? 'font-bengali' : ''}>
                   <TrendingUp className="w-5 h-5" />
-                  Sell Your Car
+                  {tr.hero_btn_sell}
                 </Link>
               </Button>
               <Button asChild size="xl" variant="glass">
-                <Link to="/book-inspection">
+                <Link to="/book-inspection" className={lang === 'bn' ? 'font-bengali' : ''}>
                   <ShieldCheck className="w-5 h-5" />
-                  Book Inspection
+                  {tr.hero_btn_inspect}
                 </Link>
               </Button>
             </motion.div>
@@ -187,13 +182,13 @@ export default function Hero() {
               className="flex flex-wrap gap-6"
             >
               {[
-                { icon: ShieldCheck, text: 'Inspected & Certified' },
-                { icon: Zap, text: 'Same-Day Offer' },
-                { icon: Phone, text: '24/7 WhatsApp Support' },
-              ].map(({ icon: Icon, text }) => (
-                <div key={text} className="flex items-center gap-2 text-platinum-300 text-sm">
+                { icon: ShieldCheck, en: 'Inspected & Certified', bn: 'পরিদর্শিত ও প্রত্যয়িত' },
+                { icon: Zap, en: 'Same-Day Offer', bn: 'একই দিনে অফার' },
+                { icon: Phone, en: '24/7 WhatsApp Support', bn: '২৪/৭ হোয়াটসঅ্যাপ সাপোর্ট' },
+              ].map(({ icon: Icon, en, bn }) => (
+                <div key={en} className="flex items-center gap-2 text-platinum-300 text-sm">
                   <Icon className="w-4 h-4 text-orange-400 flex-shrink-0" />
-                  <span>{text}</span>
+                  <span className={lang === 'bn' ? 'font-bengali' : ''}>{lang === 'bn' ? bn : en}</span>
                 </div>
               ))}
             </motion.div>
@@ -222,7 +217,7 @@ export default function Hero() {
                   <div className="text-white font-bold text-lg">৳32 Lac</div>
                   <div className="text-emerald-400 text-xs flex items-center gap-1">
                     <ShieldCheck className="w-3 h-3" />
-                    Certified Vehicle
+                    {lang === 'bn' ? 'প্রত্যয়িত যানবাহন' : 'Certified Vehicle'}
                   </div>
                 </div>
               </div>
@@ -234,7 +229,9 @@ export default function Hero() {
                 className="absolute -top-6 -right-6 glass rounded-2xl p-4 border border-white/10 shadow-glass"
               >
                 <div className="text-2xl font-bold text-orange-400 font-heading">500+</div>
-                <div className="text-xs text-platinum-400">Cars Sold</div>
+                <div className={`text-xs text-platinum-400 ${lang === 'bn' ? 'font-bengali' : ''}`}>
+                  {tr.hero_stat_sold}
+                </div>
               </motion.div>
 
               <motion.div
@@ -272,8 +269,9 @@ export default function Hero() {
               >
                 {stat.value}
               </motion.div>
-              <div className="text-platinum-400 text-sm">{stat.label}</div>
-              <div className="text-platinum-500 text-xs font-bengali">{stat.label_bn}</div>
+              <div className={`text-platinum-400 text-sm text-center ${lang === 'bn' ? 'font-bengali' : ''}`}>
+                {stat.label}
+              </div>
             </div>
           ))}
         </motion.div>
@@ -285,7 +283,9 @@ export default function Hero() {
         transition={{ duration: 2, repeat: Infinity }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-platinum-500"
       >
-        <span className="text-xs">Scroll to explore</span>
+        <span className={`text-xs ${lang === 'bn' ? 'font-bengali' : ''}`}>
+          {lang === 'bn' ? 'স্ক্রোল করুন' : 'Scroll to explore'}
+        </span>
         <div className="w-6 h-10 rounded-full border-2 border-white/20 flex justify-center pt-2">
           <div className="w-1.5 h-3 bg-orange-500 rounded-full animate-bounce" />
         </div>

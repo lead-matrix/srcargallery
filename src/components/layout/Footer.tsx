@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Phone, Mail, MapPin, MessageCircle, ArrowRight, Car } from 'lucide-react'
+import { useLanguageStore } from '@/store/languageStore'
+import { t } from '@/lib/translations'
 
 const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -22,30 +24,33 @@ const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 )
 
-const quickLinks = [
-  { href: '/cars', label: 'Buy a Car' },
-  { href: '/sell', label: 'Sell Your Car' },
-  { href: '/valuation', label: 'Car Valuation' },
-  { href: '/book-inspection', label: 'Book Inspection' },
-  { href: '/compare', label: 'Compare Cars' },
-  { href: '/blog', label: 'Blog & Guides' },
-]
-
 const popularBrands = [
   'Toyota', 'Honda', 'Nissan', 'Mitsubishi', 'Mazda', 'BMW', 'Mercedes-Benz', 'Audi', 'Lexus',
 ]
 
-const popularSearches = [
-  { label: 'Used Toyota Premio', href: '/cars?brand=Toyota&model=Premio' },
-  { label: 'Used Toyota Axio', href: '/cars?brand=Toyota&model=Axio' },
-  { label: 'Used Honda Vezel', href: '/cars?brand=Honda&model=Vezel' },
-  { label: 'Hybrid Cars Dhaka', href: '/cars?fuel_type=hybrid' },
-  { label: 'SUV Under 50 Lac', href: '/cars?body_type=suv&price_max=5000000' },
-  { label: 'Sell My Car Dhaka', href: '/sell' },
-]
-
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const { lang } = useLanguageStore()
+  const tr = t[lang]
+  const bn = lang === 'bn'
+
+  const quickLinks = [
+    { href: '/cars', label: tr.nav_buy },
+    { href: '/sell', label: tr.nav_sell },
+    { href: '/valuation', label: tr.nav_valuation },
+    { href: '/book-inspection', label: tr.nav_inspection },
+    { href: '/compare', label: tr.nav_compare },
+    { href: '/blog', label: tr.nav_blog },
+  ]
+
+  const popularSearches = [
+    { label: bn ? 'টয়োটা প্রিমিও ব্যবহৃত' : 'Used Toyota Premio', href: '/cars?brand=Toyota&model=Premio' },
+    { label: bn ? 'টয়োটা অ্যাক্সিও ব্যবহৃত' : 'Used Toyota Axio', href: '/cars?brand=Toyota&model=Axio' },
+    { label: bn ? 'হোন্ডা ভেজেল ব্যবহৃত' : 'Used Honda Vezel', href: '/cars?brand=Honda&model=Vezel' },
+    { label: bn ? 'হাইব্রিড গাড়ি ঢাকা' : 'Hybrid Cars Dhaka', href: '/cars?fuel_type=hybrid' },
+    { label: bn ? '৫০ লাখের নিচে এসইউভি' : 'SUV Under 50 Lac', href: '/cars?body_type=suv&price_max=5000000' },
+    { label: bn ? 'আমার গাড়ি বিক্রি করুন' : 'Sell My Car Dhaka', href: '/sell' },
+  ]
 
   return (
     <footer className="bg-navy-950 border-t border-white/5">
@@ -53,24 +58,26 @@ export default function Footer() {
       <div className="bg-gradient-to-r from-orange-600 to-orange-500 py-12 px-4">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <h3 className="font-heading text-2xl font-bold text-white">Ready to Buy or Sell?</h3>
-            <p className="text-orange-100 mt-1">
-              গাড়ি কিনুন অথবা বিক্রি করুন — SR Car Gallery-তে আজই শুরু করুন
+            <h3 className={`font-heading text-2xl font-bold text-white ${bn ? 'font-bengali' : ''}`}>
+              {tr.cta_title}
+            </h3>
+            <p className={`text-orange-100 mt-1 ${bn ? 'font-bengali' : ''}`}>
+              {tr.cta_subtitle}
             </p>
           </div>
           <div className="flex gap-3 flex-wrap">
             <Link
               to="/cars"
-              className="bg-white text-orange-600 font-semibold px-6 py-3 rounded-xl hover:bg-orange-50 transition-colors flex items-center gap-2"
+              className={`bg-white text-orange-600 font-semibold px-6 py-3 rounded-xl hover:bg-orange-50 transition-colors flex items-center gap-2 ${bn ? 'font-bengali' : ''}`}
             >
               <Car className="w-4 h-4" />
-              Browse Cars
+              {tr.cta_btn_cars}
             </Link>
             <Link
               to="/sell"
-              className="border-2 border-white text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/10 transition-colors flex items-center gap-2"
+              className={`border-2 border-white text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/10 transition-colors flex items-center gap-2 ${bn ? 'font-bengali' : ''}`}
             >
-              Sell My Car
+              {tr.cta_btn_sell}
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -91,11 +98,8 @@ export default function Footer() {
                 <div className="text-orange-400 text-xs">A Curated Collection</div>
               </div>
             </Link>
-            <p className="text-platinum-400 text-sm leading-relaxed mb-4">
-              Dhaka's trusted used car marketplace. We buy, inspect, and resell quality vehicles with full transparency.
-            </p>
-            <p className="text-platinum-400 text-sm font-bengali leading-relaxed mb-6">
-              ঢাকার বিশ্বস্ত সেকেন্ড হ্যান্ড গাড়ির বাজার।
+            <p className={`text-platinum-400 text-sm leading-relaxed mb-6 ${bn ? 'font-bengali' : ''}`}>
+              {tr.footer_tagline}
             </p>
             {/* Social links */}
             <div className="flex gap-3">
@@ -121,13 +125,15 @@ export default function Footer() {
 
           {/* Quick links */}
           <div>
-            <h4 className="font-heading font-semibold text-white mb-6">Quick Links</h4>
+            <h4 className={`font-heading font-semibold text-white mb-6 ${bn ? 'font-bengali' : ''}`}>
+              {tr.footer_quick_links}
+            </h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="text-platinum-400 hover:text-orange-400 text-sm transition-colors flex items-center gap-2 group"
+                    className={`text-platinum-400 hover:text-orange-400 text-sm transition-colors flex items-center gap-2 group ${bn ? 'font-bengali' : ''}`}
                   >
                     <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
                     {link.label}
@@ -139,13 +145,15 @@ export default function Footer() {
 
           {/* Popular Searches */}
           <div>
-            <h4 className="font-heading font-semibold text-white mb-6">Popular Searches</h4>
+            <h4 className={`font-heading font-semibold text-white mb-6 ${bn ? 'font-bengali' : ''}`}>
+              {bn ? 'জনপ্রিয় অনুসন্ধান' : 'Popular Searches'}
+            </h4>
             <ul className="space-y-3">
               {popularSearches.map((link) => (
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="text-platinum-400 hover:text-orange-400 text-sm transition-colors flex items-center gap-2 group"
+                    className={`text-platinum-400 hover:text-orange-400 text-sm transition-colors flex items-center gap-2 group ${bn ? 'font-bengali' : ''}`}
                   >
                     <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
                     {link.label}
@@ -157,7 +165,9 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-heading font-semibold text-white mb-6">Contact Us</h4>
+            <h4 className={`font-heading font-semibold text-white mb-6 ${bn ? 'font-bengali' : ''}`}>
+              {tr.footer_contact_us}
+            </h4>
             <div className="space-y-4">
               <a
                 href="https://maps.google.com/?q=Agargaon+Taltola+Dhaka"
@@ -185,22 +195,26 @@ export default function Footer() {
             </div>
 
             <div className="mt-6">
-              <h5 className="text-white text-sm font-semibold mb-3">Showroom Hours</h5>
-              <div className="space-y-1.5 text-sm text-platinum-400">
+              <h5 className={`text-white text-sm font-semibold mb-3 ${bn ? 'font-bengali' : ''}`}>
+                {tr.footer_hours}
+              </h5>
+              <div className={`space-y-1.5 text-sm text-platinum-400 ${bn ? 'font-bengali' : ''}`}>
                 <div className="flex justify-between">
-                  <span>Saturday – Thursday</span>
-                  <span className="text-emerald-400">9am – 7pm</span>
+                  <span>{bn ? 'শনি – বৃহস্পতি' : 'Saturday – Thursday'}</span>
+                  <span className="text-emerald-400">10am – 8pm</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Friday</span>
-                  <span className="text-orange-400">2pm – 7pm</span>
+                  <span>{bn ? 'শুক্রবার' : 'Friday'}</span>
+                  <span className="text-orange-400">2pm – 8pm</span>
                 </div>
               </div>
             </div>
 
             {/* Brands we buy */}
             <div className="mt-6">
-              <h5 className="text-white text-sm font-semibold mb-3">Brands We Buy</h5>
+              <h5 className={`text-white text-sm font-semibold mb-3 ${bn ? 'font-bengali' : ''}`}>
+                {bn ? 'আমরা যে ব্র্যান্ড কিনি' : 'Brands We Buy'}
+              </h5>
               <div className="flex flex-wrap gap-2">
                 {popularBrands.slice(0, 6).map((brand) => (
                   <Link
@@ -220,10 +234,16 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/5 py-6 px-4">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-platinum-500">
-          <p>© {currentYear} SR Car Gallery. All rights reserved. | Used Cars for Sale in Bangladesh</p>
+          <p className={bn ? 'font-bengali' : ''}>
+            © {currentYear} SR Car Gallery. {tr.footer_rights} | {bn ? 'বাংলাদেশে ব্যবহৃত গাড়ি বিক্রয়' : 'Used Cars for Sale in Bangladesh'}
+          </p>
           <div className="flex gap-6">
-            <Link to="/privacy" className="hover:text-platinum-300 transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-platinum-300 transition-colors">Terms of Service</Link>
+            <Link to="/privacy" className={`hover:text-platinum-300 transition-colors ${bn ? 'font-bengali' : ''}`}>
+              {tr.footer_privacy}
+            </Link>
+            <Link to="/terms" className={`hover:text-platinum-300 transition-colors ${bn ? 'font-bengali' : ''}`}>
+              {tr.footer_terms}
+            </Link>
             <Link to="/admin" className="hover:text-platinum-300 transition-colors">Admin</Link>
           </div>
         </div>

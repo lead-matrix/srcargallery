@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useRef } from 'react'
+import { useLanguageStore } from '@/store/languageStore'
 
 const brands = [
   { name: 'Toyota', models: 'Premio, Axio, Noah, Prado, Vitz' },
@@ -13,25 +13,13 @@ const brands = [
   { name: 'Lexus', models: 'RX, NX, IS, ES' },
   { name: 'Hyundai', models: 'Tucson, Sonata, Santa Fe' },
   { name: 'Suzuki', models: 'Swift, Alto, Baleno' },
-  { name: 'Hybrid', models: 'All Hybrid Vehicles' },
+  { name: 'Hybrid', models: 'All Hybrid Vehicles', models_bn: 'সকল হাইব্রিড গাড়ি' },
 ]
 
-const brandLogos: Record<string, string> = {
-  Toyota: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Toyota_carlogo.svg/200px-Toyota_carlogo.svg.png',
-  Honda: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Honda.svg/200px-Honda.svg.png',
-  Nissan: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Nissan_2020_logo.svg/200px-Nissan_2020_logo.svg.png',
-  Mitsubishi: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Mitsubishi_logo.svg/200px-Mitsubishi_logo.svg.png',
-  Mazda: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Mazda_logo_with_text.svg/200px-Mazda_logo_with_text.svg.png',
-  BMW: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/200px-BMW.svg.png',
-  Mercedes: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/200px-Mercedes-Logo.svg.png',
-  Audi: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Audi-Logo_2016.svg/200px-Audi-Logo_2016.svg.png',
-  Lexus: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Lexus_divisional_emblem.svg/200px-Lexus_divisional_emblem.svg.png',
-  Hyundai: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Hyundai_Motor_Company_logo.svg/200px-Hyundai_Motor_Company_logo.svg.png',
-  Suzuki: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Suzuki_logo_2.svg/200px-Suzuki_logo_2.svg.png',
-  Hybrid: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/EV_plug_icon.svg/200px-EV_plug_icon.svg.png',
-}
-
 export default function BrandsCarousel() {
+  const { lang } = useLanguageStore()
+  const bn = lang === 'bn'
+
   return (
     <section className="py-16 bg-navy-800/50 border-y border-white/5 overflow-hidden">
       <div className="container-custom mb-10">
@@ -42,11 +30,12 @@ export default function BrandsCarousel() {
           transition={{ duration: 0.5 }}
           className="text-center"
         >
-          <span className="text-orange-400 text-sm font-semibold tracking-widest uppercase">We Buy & Sell</span>
-          <h2 className="font-heading text-3xl md:text-4xl font-black text-white mt-3 mb-2">
-            Premium Brands We Carry
+          <span className={`text-orange-400 text-sm font-semibold tracking-widest uppercase ${bn ? 'font-bengali' : ''}`}>
+            {bn ? 'আমরা কিনি এবং বিক্রি করি' : 'We Buy & Sell'}
+          </span>
+          <h2 className={`font-heading text-3xl md:text-4xl font-black text-white mt-3 mb-2 ${bn ? 'font-bengali' : ''}`}>
+            {bn ? 'আমাদের সংগ্রহে থাকা প্রিমিয়াম ব্র্যান্ডসমূহ' : 'Premium Brands We Carry'}
           </h2>
-          <p className="text-platinum-400 font-bengali">আমরা যে সকল ব্র্যান্ডের গাড়ি কিনি এবং বিক্রি করি</p>
         </motion.div>
       </div>
 
@@ -62,7 +51,9 @@ export default function BrandsCarousel() {
                 <div className="font-heading font-bold text-white text-lg group-hover:text-orange-400 transition-colors">
                   {brand.name}
                 </div>
-                <div className="text-platinum-500 text-xs mt-1">{brand.models}</div>
+                <div className={`text-platinum-500 text-xs mt-1 ${bn ? 'font-bengali' : ''}`}>
+                  {bn && (brand as any).models_bn ? (brand as any).models_bn : brand.models}
+                </div>
               </div>
             </div>
           ))}

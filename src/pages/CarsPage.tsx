@@ -8,17 +8,11 @@ import CarCard from '@/components/cars/CarCard'
 import { MOCK_CARS } from '@/lib/mockData'
 import { BRANDS, BODY_TYPES, FUEL_TYPES, TRANSMISSIONS } from '@/types/database'
 import type { CarFilter } from '@/types/database'
+import { useLanguageStore } from '@/store/languageStore'
+import { t } from '@/lib/translations'
 
 const currentYear = new Date().getFullYear()
 const years = Array.from({ length: 25 }, (_, i) => currentYear - i)
-
-const SORT_OPTIONS = [
-  { value: 'newest', label: 'Newest First' },
-  { value: 'price_asc', label: 'Price: Low to High' },
-  { value: 'price_desc', label: 'Price: High to Low' },
-  { value: 'year_desc', label: 'Year: Newest' },
-  { value: 'mileage_asc', label: 'Lowest Mileage' },
-]
 
 export default function CarsPage() {
   const [filters, setFilters] = useState<CarFilter>({})
@@ -27,6 +21,18 @@ export default function CarsPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [sort, setSort] = useState('newest')
+  
+  const { lang } = useLanguageStore()
+  const tr = t[lang]
+  const bn = lang === 'bn'
+
+  const SORT_OPTIONS = [
+    { value: 'newest', label: bn ? 'নতুনগুলো আগে' : 'Newest First' },
+    { value: 'price_asc', label: bn ? 'দাম: কম থেকে বেশি' : 'Price: Low to High' },
+    { value: 'price_desc', label: bn ? 'দাম: বেশি থেকে কম' : 'Price: High to Low' },
+    { value: 'year_desc', label: bn ? 'বছর: নতুন' : 'Year: Newest' },
+    { value: 'mileage_asc', label: bn ? 'কম মাইলেজ' : 'Lowest Mileage' },
+  ]
 
   const toggleFav = (id: string) => {
     setFavorites(prev => {
@@ -54,6 +60,7 @@ export default function CarsPage() {
       const s = search.toLowerCase()
       cars = cars.filter(c =>
         c.title.toLowerCase().includes(s) ||
+        (c.title_bn && c.title_bn.includes(s)) ||
         c.brand.toLowerCase().includes(s) ||
         c.model.toLowerCase().includes(s)
       )
@@ -82,7 +89,7 @@ export default function CarsPage() {
 
   const FilterSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <div className="border-b border-white/8 pb-5 mb-5 last:border-0 last:pb-0 last:mb-0">
-      <h4 className="text-white font-semibold text-sm mb-3">{title}</h4>
+      <h4 className={`text-white font-semibold text-sm mb-3 ${bn ? 'font-bengali' : ''}`}>{title}</h4>
       {children}
     </div>
   )
@@ -97,7 +104,7 @@ export default function CarsPage() {
       <select
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="input-dark w-full appearance-none pr-8"
+        className={`input-dark w-full appearance-none pr-8 ${bn ? 'font-bengali' : ''}`}
       >
         <option value="">{placeholder}</option>
         {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
@@ -109,46 +116,48 @@ export default function CarsPage() {
   const Sidebar = () => (
     <div className="bg-navy-800 border border-white/8 rounded-2xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="font-heading font-bold text-white text-lg">Filters</h3>
+        <h3 className={`font-heading font-bold text-white text-lg ${bn ? 'font-bengali' : ''}`}>
+          {bn ? 'ফিল্টারসমূহ' : 'Filters'}
+        </h3>
         {activeFilterCount > 0 && (
           <button
             onClick={clearFilters}
-            className="text-orange-400 text-sm hover:text-orange-300 transition-colors flex items-center gap-1"
+            className={`text-orange-400 text-sm hover:text-orange-300 transition-colors flex items-center gap-1 ${bn ? 'font-bengali' : ''}`}
           >
             <X className="w-3.5 h-3.5" />
-            Clear all ({activeFilterCount})
+            {bn ? `সব মুছুন (${activeFilterCount})` : `Clear all (${activeFilterCount})`}
           </button>
         )}
       </div>
 
-      <FilterSection title="Brand">
+      <FilterSection title={bn ? 'ব্র্যান্ড' : 'Brand'}>
         <FilterSelect
           value={filters.brand || ''}
           onChange={v => setFilter('brand', v)}
           options={BRANDS.map(b => ({ value: b, label: b }))}
-          placeholder="All Brands"
+          placeholder={bn ? 'সকল ব্র্যান্ড' : 'All Brands'}
         />
       </FilterSection>
 
-      <FilterSection title="Body Type">
+      <FilterSection title={bn ? 'বডির ধরণ' : 'Body Type'}>
         <div className="grid grid-cols-2 gap-2">
           {BODY_TYPES.map(bt => (
             <button
               key={bt.value}
               onClick={() => setFilter('body_type', filters.body_type === bt.value ? '' : bt.value)}
-              className={`px-3 py-2 rounded-xl text-xs font-medium border transition-all ${
+              className={`px-3 py-2 rounded-xl text-xs font-medium border transition-all ${bn ? 'font-bengali' : ''} ${
                 filters.body_type === bt.value
                   ? 'bg-orange-500 text-white border-orange-500'
                   : 'border-white/10 text-platinum-400 hover:border-orange-500/30 hover:text-white'
               }`}
             >
-              {bt.label}
+              {bn ? (bt.value === 'sedan' ? 'সেডান' : bt.value === 'suv' ? 'এসইউভি' : bt.value === 'hatchback' ? 'হ্যাচব্যাক' : 'মাইক্রোবাস') : bt.label}
             </button>
           ))}
         </div>
       </FilterSection>
 
-      <FilterSection title="Fuel Type">
+      <FilterSection title={bn ? 'জ্বালানির ধরণ' : 'Fuel Type'}>
         <div className="space-y-2">
           {FUEL_TYPES.map(ft => (
             <label key={ft.value} className="flex items-center gap-2.5 cursor-pointer group">
@@ -160,74 +169,77 @@ export default function CarsPage() {
                 onChange={() => setFilter('fuel_type', filters.fuel_type === ft.value ? '' : ft.value)}
                 className="w-4 h-4 accent-orange-500"
               />
-              <span className="text-sm text-platinum-300 group-hover:text-white transition-colors">
-                {ft.label}
+              <span className={`text-sm text-platinum-300 group-hover:text-white transition-colors ${bn ? 'font-bengali' : ''}`}>
+                {bn ? (ft.value === 'petrol' ? 'অকটেন' : ft.value === 'hybrid' ? 'হাইব্রিড' : 'ডিজেল') : ft.label}
               </span>
             </label>
           ))}
         </div>
       </FilterSection>
 
-      <FilterSection title="Transmission">
+      <FilterSection title={bn ? 'ট্রান্সমিশন' : 'Transmission'}>
         <div className="space-y-2">
-          {TRANSMISSIONS.map(t => (
-            <label key={t.value} className="flex items-center gap-2.5 cursor-pointer group">
+          {TRANSMISSIONS.map(tOption => (
+            <label key={tOption.value} className="flex items-center gap-2.5 cursor-pointer group">
               <input
                 type="radio"
                 name="transmission"
-                value={t.value}
-                checked={filters.transmission === t.value}
-                onChange={() => setFilter('transmission', filters.transmission === t.value ? '' : t.value)}
+                value={tOption.value}
+                checked={filters.transmission === tOption.value}
+                onChange={() => setFilter('transmission', filters.transmission === tOption.value ? '' : tOption.value)}
                 className="w-4 h-4 accent-orange-500"
               />
-              <span className="text-sm text-platinum-300 group-hover:text-white transition-colors">
-                {t.label}
+              <span className={`text-sm text-platinum-300 group-hover:text-white transition-colors ${bn ? 'font-bengali' : ''}`}>
+                {bn ? (tOption.value === 'automatic' ? 'অটোমেটিক' : 'ম্যানুয়াল') : tOption.label}
               </span>
             </label>
           ))}
         </div>
       </FilterSection>
 
-      <FilterSection title="Year">
+      <FilterSection title={bn ? 'বছর' : 'Year'}>
         <div className="grid grid-cols-2 gap-2">
           <FilterSelect
             value={String(filters.year_min || '')}
             onChange={v => setFilter('year_min', v ? parseInt(v) : undefined)}
             options={years.map(y => ({ value: String(y), label: String(y) }))}
-            placeholder="Min Year"
+            placeholder={bn ? 'সর্বনিম্ন বছর' : 'Min Year'}
           />
           <FilterSelect
             value={String(filters.year_max || '')}
             onChange={v => setFilter('year_max', v ? parseInt(v) : undefined)}
             options={years.map(y => ({ value: String(y), label: String(y) }))}
-            placeholder="Max Year"
+            placeholder={bn ? 'সর্বোচ্চ বছর' : 'Max Year'}
           />
         </div>
       </FilterSection>
 
-      <FilterSection title="Price (BDT)">
+      <FilterSection title={bn ? 'মূল্য (টাকা)' : 'Price (BDT)'}>
         <div className="grid grid-cols-2 gap-2">
           <Input
             type="number"
-            placeholder="Min ৳"
+            placeholder={bn ? 'সর্বনিম্ন ৳' : 'Min ৳'}
             value={filters.price_min || ''}
             onChange={e => setFilter('price_min', e.target.value ? parseInt(e.target.value) : undefined)}
+            className={bn ? 'font-bengali' : ''}
           />
           <Input
             type="number"
-            placeholder="Max ৳"
+            placeholder={bn ? 'সর্বোচ্চ ৳' : 'Max ৳'}
             value={filters.price_max || ''}
             onChange={e => setFilter('price_max', e.target.value ? parseInt(e.target.value) : undefined)}
+            className={bn ? 'font-bengali' : ''}
           />
         </div>
       </FilterSection>
 
-      <FilterSection title="Max Mileage (km)">
+      <FilterSection title={bn ? 'সর্বোচ্চ মাইলেজ (কিমি)' : 'Max Mileage (km)'}>
         <Input
           type="number"
-          placeholder="e.g. 100000"
+          placeholder={bn ? 'যেমন: ১০০০০০' : 'e.g. 100000'}
           value={filters.mileage_max || ''}
           onChange={e => setFilter('mileage_max', e.target.value ? parseInt(e.target.value) : undefined)}
+          className={bn ? 'font-bengali' : ''}
         />
       </FilterSection>
     </div>
@@ -236,7 +248,7 @@ export default function CarsPage() {
   return (
     <>
       <Helmet>
-        <title>Used Cars for Sale in Dhaka | SR Car Gallery Bangladesh</title>
+        <title>{bn ? 'বাংলাদেশে ব্যবহৃত গাড়ি বিক্রয় | SR Car Gallery' : 'Used Cars for Sale in Dhaka | SR Car Gallery Bangladesh'}</title>
         <meta name="description" content="Browse our inventory of inspected used cars for sale in Dhaka. Toyota, Honda, Nissan, BMW, Mercedes and more. Competitive prices, inspection reports included." />
       </Helmet>
 
@@ -244,20 +256,19 @@ export default function CarsPage() {
         {/* Page header */}
         <div className="bg-navy-800/50 border-b border-white/5 py-10 px-4">
           <div className="max-w-7xl mx-auto">
-            <h1 className="font-heading text-4xl font-black text-white mb-2">
-              Used Cars for Sale in Bangladesh
+            <h1 className={`font-heading text-4xl font-black text-white mb-2 ${bn ? 'font-bengali' : ''}`}>
+              {bn ? 'বাংলাদেশে বিক্রয়যোগ্য সেকেন্ড হ্যান্ড গাড়ি' : 'Used Cars for Sale in Bangladesh'}
             </h1>
-            <p className="text-platinum-400 font-bengali">বাংলাদেশে বিক্রয়যোগ্য সেকেন্ড হ্যান্ড গাড়ি</p>
 
             {/* Search bar */}
             <div className="mt-6 relative max-w-2xl">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-platinum-500" />
               <Input
                 type="text"
-                placeholder="Search by brand, model, or keyword..."
+                placeholder={bn ? 'ব্র্যান্ড, মডেল বা কীওয়ার্ড দিয়ে অনুসন্ধান করুন...' : 'Search by brand, model, or keyword...'}
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="pl-12 h-13 text-base"
+                className={`pl-12 h-13 text-base ${bn ? 'font-bengali' : ''}`}
               />
               {search && (
                 <button
@@ -287,18 +298,22 @@ export default function CarsPage() {
                     variant="glass"
                     size="sm"
                     onClick={() => setSidebarOpen(!sidebarOpen)}
-                    className="lg:hidden"
+                    className="lg:hidden animate-fade-in"
                   >
                     <SlidersHorizontal className="w-4 h-4" />
-                    Filters
+                    <span className={bn ? 'font-bengali' : ''}>{bn ? 'ফিল্টার' : 'Filters'}</span>
                     {activeFilterCount > 0 && (
                       <span className="bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                         {activeFilterCount}
                       </span>
                     )}
                   </Button>
-                  <span className="text-platinum-400 text-sm">
-                    <span className="text-white font-semibold">{filtered.length}</span> vehicles found
+                  <span className={`text-platinum-400 text-sm ${bn ? 'font-bengali' : ''}`}>
+                    {bn ? (
+                      <>মোট <span className="text-white font-semibold">{filtered.length}টি</span> গাড়ি পাওয়া গেছে</>
+                    ) : (
+                      <><span className="text-white font-semibold">{filtered.length}</span> vehicles found</>
+                    )}
                   </span>
                 </div>
 
@@ -307,7 +322,7 @@ export default function CarsPage() {
                     <select
                       value={sort}
                       onChange={e => setSort(e.target.value)}
-                      className="input-dark py-2 text-sm pr-8 appearance-none"
+                      className={`input-dark py-2 text-sm pr-8 appearance-none ${bn ? 'font-bengali' : ''}`}
                     >
                       {SORT_OPTIONS.map(o => (
                         <option key={o.value} value={o.value}>{o.label}</option>
@@ -360,9 +375,15 @@ export default function CarsPage() {
                   className="text-center py-20"
                 >
                   <div className="text-6xl mb-4">🚗</div>
-                  <h3 className="font-heading text-2xl font-bold text-white mb-2">No cars found</h3>
-                  <p className="text-platinum-400 mb-6">Try adjusting your filters or search terms.</p>
-                  <Button onClick={clearFilters} variant="outline">Clear Filters</Button>
+                  <h3 className={`font-heading text-2xl font-bold text-white mb-2 ${bn ? 'font-bengali' : ''}`}>
+                    {bn ? 'কোনো গাড়ি পাওয়া যায়নি' : 'No cars found'}
+                  </h3>
+                  <p className={`text-platinum-400 mb-6 ${bn ? 'font-bengali' : ''}`}>
+                    {bn ? 'অনুগ্রহ করে ফিল্টার পরিবর্তন করে আবার চেষ্টা করুন।' : 'Try adjusting your filters or search terms.'}
+                  </p>
+                  <Button onClick={clearFilters} variant="outline" className={bn ? 'font-bengali' : ''}>
+                    {tr.cars_clear}
+                  </Button>
                 </motion.div>
               )}
             </div>

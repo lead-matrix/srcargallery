@@ -251,7 +251,9 @@ export interface BlogPost {
   content_bn?: string
   cover_image?: string
   author?: string
+  author_bn?: string
   category?: string
+  category_bn?: string
   tags?: string[]
   published: boolean
   seo_title?: string
@@ -282,6 +284,7 @@ export interface Testimonial {
   review: string
   review_bn?: string
   car_bought?: string
+  car_bought_bn?: string
   date?: string
   verified: boolean
   created_at: string

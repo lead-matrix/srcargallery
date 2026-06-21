@@ -4,9 +4,15 @@ import { ArrowRight, Sparkles } from 'lucide-react'
 import CarCard from '@/components/cars/CarCard'
 import { MOCK_CARS } from '@/lib/mockData'
 import { useState } from 'react'
+import { useLanguageStore } from '@/store/languageStore'
+import { t } from '@/lib/translations'
 
 export default function FeaturedCars() {
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
+  const { lang } = useLanguageStore()
+  const tr = t[lang]
+  const bn = lang === 'bn'
+
   const featured = MOCK_CARS.filter(c => c.featured)
   const justArrived = MOCK_CARS.filter(c => c.just_arrived)
 
@@ -32,18 +38,23 @@ export default function FeaturedCars() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <Sparkles className="w-5 h-5 text-orange-400" />
-              <span className="text-orange-400 text-sm font-semibold tracking-widest uppercase">Just Arrived</span>
+              <span className={`text-orange-400 text-sm font-semibold tracking-widest uppercase ${bn ? 'font-bengali' : ''}`}>
+                {bn ? 'নতুন আসা গাড়ি' : 'Just Arrived'}
+              </span>
             </div>
-            <h2 className="font-heading text-3xl md:text-4xl font-black text-white">
-              Freshly Added <span className="text-gradient">Vehicles</span>
+            <h2 className={`font-heading text-3xl md:text-4xl font-black text-white ${bn ? 'font-bengali' : ''}`}>
+              {bn ? (
+                <>সদ্য যুক্ত হওয়া <span className="text-gradient">যানবাহনসমূহ</span></>
+              ) : (
+                <>Freshly Added <span className="text-gradient">Vehicles</span></>
+              )}
             </h2>
-            <p className="text-platinum-500 text-sm font-bengali mt-1">নতুন আসা গাড়িসমূহ</p>
           </div>
           <Link
             to="/cars?just_arrived=true"
-            className="hidden md:flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-colors font-medium"
+            className={`hidden md:flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-colors font-medium ${bn ? 'font-bengali' : ''}`}
           >
-            View All
+            {bn ? 'সব দেখুন' : 'View All'}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
@@ -69,17 +80,22 @@ export default function FeaturedCars() {
           className="flex items-center justify-between mb-8"
         >
           <div>
-            <span className="text-orange-400 text-sm font-semibold tracking-widest uppercase">Featured Vehicles</span>
-            <h2 className="font-heading text-3xl md:text-4xl font-black text-white mt-2">
-              Hand-Picked <span className="text-gradient">Selection</span>
+            <span className={`text-orange-400 text-sm font-semibold tracking-widest uppercase ${bn ? 'font-bengali' : ''}`}>
+              {tr.featured_title}
+            </span>
+            <h2 className={`font-heading text-3xl md:text-4xl font-black text-white mt-2 ${bn ? 'font-bengali' : ''}`}>
+              {bn ? (
+                <>বিশেষভাবে <span className="text-gradient">নির্বাচিত</span></>
+              ) : (
+                <>Hand-Picked <span className="text-gradient">Selection</span></>
+              )}
             </h2>
-            <p className="text-platinum-500 text-sm font-bengali mt-1">বিশেষভাবে নির্বাচিত গাড়িসমূহ</p>
           </div>
           <Link
             to="/cars"
-            className="hidden md:flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-colors font-medium"
+            className={`hidden md:flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-colors font-medium ${bn ? 'font-bengali' : ''}`}
           >
-            View All Cars
+            {tr.featured_view_all}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
@@ -100,9 +116,9 @@ export default function FeaturedCars() {
         <div className="text-center mt-12">
           <Link
             to="/cars"
-            className="btn-primary inline-flex items-center gap-2"
+            className={`btn-primary inline-flex items-center gap-2 ${bn ? 'font-bengali' : ''}`}
           >
-            View All Vehicles
+            {bn ? 'সব গাড়ি ব্রাউজ করুন' : 'View All Vehicles'}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
