@@ -36,7 +36,7 @@ function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const isAuthRoute  = location.pathname.startsWith('/auth')
 
   return (
-    <div className="flex flex-col min-h-screen bg-navy-900 text-white selection:bg-orange-500/30 selection:text-orange-300">
+    <div className="flex flex-col min-h-screen bg-[#FAF8F4] text-[#0F1117] selection:bg-[#B8943F]/20 selection:text-[#9E7A38]">
       {!isAdminRoute && !isAuthRoute && <Header />}
       <div className="flex-grow">{children}</div>
       {!isAdminRoute && !isAuthRoute && <Footer />}

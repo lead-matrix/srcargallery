@@ -53,29 +53,29 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-navy-950 border-t border-white/5">
+    <footer className="bg-navy-950 border-t border-[#B8943F]/20 text-white">
       {/* CTA Banner */}
-      <div className="py-12 px-4" style={{ background: 'linear-gradient(135deg, #C4762A 0%, #E8892A 50%, #C4762A 100%)' }}>
+      <div className="py-12 px-4" style={{ background: 'linear-gradient(135deg, #0A1628 0%, #162B52 50%, #0A1628 100%)', borderBottom: '1px solid rgba(184,148,63,0.35)' }}>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className={`font-heading text-2xl font-bold text-white ${bn ? 'font-bengali' : ''}`}>
               {tr.cta_title}
             </h3>
-            <p className={`text-orange-100 mt-1 ${bn ? 'font-bengali' : ''}`}>
+            <p className={`text-[#CDB97E] mt-1 ${bn ? 'font-bengali' : ''}`}>
               {tr.cta_subtitle}
             </p>
           </div>
           <div className="flex gap-3 flex-wrap">
             <Link
               to="/cars"
-              className={`bg-white text-orange-600 font-semibold px-6 py-3 rounded-xl hover:bg-orange-50 transition-colors flex items-center gap-2 ${bn ? 'font-bengali' : ''}`}
+              className={`bg-white text-[#0A1628] font-bold px-6 py-3 rounded-xl hover:bg-[#FAF8F4] transition-colors flex items-center gap-2 ${bn ? 'font-bengali' : ''}`}
             >
-              <Car className="w-4 h-4" />
+              <Car className="w-4 h-4 text-[#B8943F]" />
               {tr.cta_btn_cars}
             </Link>
             <Link
               to="/sell"
-              className={`border-2 border-white text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/10 transition-colors flex items-center gap-2 ${bn ? 'font-bengali' : ''}`}
+              className={`border-2 border-white text-white font-bold px-6 py-3 rounded-xl hover:bg-white/10 transition-colors flex items-center gap-2 ${bn ? 'font-bengali' : ''}`}
             >
               {tr.cta_btn_sell}
               <ArrowRight className="w-4 h-4" />
@@ -96,11 +96,11 @@ export default function Footer() {
                 width={52}
                 height={52}
                 className="w-12 h-12 object-contain flex-shrink-0"
-                style={{ filter: 'drop-shadow(0 2px 6px rgba(232,137,42,0.35))' }}
+                style={{ filter: 'drop-shadow(0 2px 6px rgba(184,148,63,0.35))' }}
               />
               <div>
                 <div className="font-heading font-bold text-white text-lg leading-none">SR Car Gallery</div>
-                <div className="text-xs font-semibold tracking-widest uppercase mt-1" style={{ color: '#E8892A' }}>A Curated Collection</div>
+                <div className="text-xs font-semibold tracking-widest uppercase mt-1 text-[#B8943F]">A Curated Collection</div>
               </div>
             </Link>
             <p className={`text-platinum-400 text-sm leading-relaxed mb-6 ${bn ? 'font-bengali' : ''}`}>
@@ -120,7 +120,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-10 h-10 rounded-xl bg-navy-800 border border-white/8 flex items-center justify-center text-platinum-400 hover:text-orange-400 hover:border-orange-500/30 hover:bg-orange-500/10 transition-all duration-200"
+                  className="w-10 h-10 rounded-xl bg-navy-900 border border-white/8 flex items-center justify-center text-platinum-400 hover:text-[#B8943F] hover:border-[#B8943F]/40 hover:bg-[#B8943F]/10 transition-all duration-200"
                 >
                   <Icon className="w-4 h-4" />
                 </a>
@@ -138,7 +138,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className={`text-platinum-400 hover:text-orange-400 text-sm transition-colors flex items-center gap-2 group ${bn ? 'font-bengali' : ''}`}
+                    className={`text-platinum-400 hover:text-[#B8943F] text-sm transition-colors flex items-center gap-2 group ${bn ? 'font-bengali' : ''}`}
                   >
                     <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
                     {link.label}
@@ -158,7 +158,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className={`text-platinum-400 hover:text-orange-400 text-sm transition-colors flex items-center gap-2 group ${bn ? 'font-bengali' : ''}`}
+                    className={`text-platinum-400 hover:text-[#B8943F] text-sm transition-colors flex items-center gap-2 group ${bn ? 'font-bengali' : ''}`}
                   >
                     <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
                     {link.label}
@@ -178,21 +178,21 @@ export default function Footer() {
                 href="https://maps.google.com/?q=Agargaon+Taltola+Dhaka"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-3 text-sm text-platinum-400 hover:text-orange-400 transition-colors group"
+                className="flex items-start gap-3 text-sm text-platinum-400 hover:text-[#B8943F] transition-colors group"
               >
-                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 group-hover:text-orange-400" />
+                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 group-hover:text-[#B8943F]" />
                 <span>D-19 B, Agargaon Taltola, Sher-E-Bangla Nagar, Dhaka-1207</span>
               </a>
               <a
                 href="tel:+8801401238019"
-                className="flex items-center gap-3 text-sm text-platinum-400 hover:text-orange-400 transition-colors"
+                className="flex items-center gap-3 text-sm text-platinum-400 hover:text-[#B8943F] transition-colors"
               >
                 <Phone className="w-4 h-4 flex-shrink-0" />
                 +880 1401-238019
               </a>
               <a
                 href="mailto:info@srcargallery.autos"
-                className="flex items-center gap-3 text-sm text-platinum-400 hover:text-orange-400 transition-colors"
+                className="flex items-center gap-3 text-sm text-platinum-400 hover:text-[#B8943F] transition-colors"
               >
                 <Mail className="w-4 h-4 flex-shrink-0" />
                 info@srcargallery.autos
@@ -210,7 +210,7 @@ export default function Footer() {
                 </div>
                 <div className="flex justify-between">
                   <span>{bn ? 'শুক্রবার' : 'Friday'}</span>
-                  <span className="text-orange-400">2pm – 8pm</span>
+                  <span className="text-[#B8943F]">2pm – 8pm</span>
                 </div>
               </div>
             </div>
@@ -225,7 +225,7 @@ export default function Footer() {
                   <Link
                     key={brand}
                     to={`/cars?brand=${brand}`}
-                    className="text-xs text-platinum-500 hover:text-orange-400 bg-navy-800 border border-white/8 px-2.5 py-1 rounded-lg hover:border-orange-500/30 transition-all"
+                    className="text-xs text-platinum-500 hover:text-[#B8943F] bg-navy-900 border border-white/8 px-2.5 py-1 rounded-lg hover:border-[#B8943F]/35 transition-all"
                   >
                     {brand}
                   </Link>

@@ -1,36 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap');
 
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
 @layer base {
   :root {
-    /* Obsidian Black backgrounds */
-    --background:        0 0% 3%;
-    --foreground:        0 0% 92%;
-    --card:              0 0% 7%;
-    --card-foreground:   0 0% 92%;
-    --popover:           0 0% 7%;
-    --popover-foreground:0 0% 92%;
-    /* Champagne Gold primary */
-    --primary:           34 46% 60%;
+    /* Pearl / Ivory backgrounds */
+    --background:        36 33% 97%;
+    --foreground:        220 20% 10%;
+    --card:              0 0% 100%;
+    --card-foreground:   220 20% 10%;
+    --popover:           0 0% 100%;
+    --popover-foreground:220 20% 10%;
+    /* Deep Navy primary */
+    --primary:           220 60% 15%;
     --primary-foreground:0 0% 100%;
-    /* Dark panels */
-    --secondary:         0 0% 12%;
-    --secondary-foreground:0 0% 92%;
-    --muted:             0 0% 10%;
-    --muted-foreground:  0 0% 55%;
-    /* Polished Chrome accent */
-    --accent:            0 0% 90%;
-    --accent-foreground: 0 0% 5%;
+    /* Warm Silver panels */
+    --secondary:         36 20% 94%;
+    --secondary-foreground:220 20% 10%;
+    --muted:             36 20% 95%;
+    --muted-foreground:  220 10% 45%;
+    /* Champagne Gold accent */
+    --accent:            38 52% 52%;
+    --accent-foreground: 0 0% 100%;
     /* Destructive */
     --destructive:       0 84% 60%;
     --destructive-foreground:0 0% 100%;
     /* Borders / inputs */
-    --border:            0 0% 12%;
-    --input:             0 0% 10%;
-    --ring:              34 46% 60%;
-    --radius:            0.75rem;
+    --border:            36 25% 88%;
+    --input:             36 25% 92%;
+    --ring:              38 52% 52%;
+    --radius:            0.625rem;
   }
 
   * {
@@ -43,103 +43,271 @@
   }
 
   body {
-    @apply bg-navy-950 text-platinum-200 font-sans;
+    background-color: #FAF8F4;
+    color: #0F1117;
+    font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
 
   /* Gold selection */
   ::selection {
-    background-color: rgba(197, 159, 109, 0.3);
-    color: #C59F6D;
+    background-color: rgba(172, 130, 64, 0.25);
+    color: #7A5C28;
   }
 
-  /* Scrollbar — carbon/gold */
-  ::-webkit-scrollbar        { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track  { background: #080808; }
-  ::-webkit-scrollbar-thumb  { background: #222; border-radius: 9999px; }
-  ::-webkit-scrollbar-thumb:hover { background: #C59F6D; }
+  /* Scrollbar — ivory/gold */
+  ::-webkit-scrollbar        { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track  { background: #F0EDE6; }
+  ::-webkit-scrollbar-thumb  { background: #CDB97E; border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #9E7A38; }
 }
 
 @layer components {
   /* ── Glass morphism ─────────────────────────────────────────── */
   .glass {
-    @apply bg-white/3 backdrop-blur-md border border-white/5;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(172, 130, 64, 0.15);
   }
   .glass-dark {
-    @apply bg-navy-900/80 backdrop-blur-md border border-white/4;
+    background: rgba(10, 18, 40, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(172, 130, 64, 0.2);
   }
 
   /* ── Gradient text ──────────────────────────────────────────── */
   .text-gradient {
-    background: linear-gradient(135deg, #C59F6D 0%, #A97E4E 50%, #8A5F32 100%);
+    background: linear-gradient(135deg, #B8943F 0%, #CDB97E 50%, #9E7A38 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-
-  .text-gradient-cyan {
-    background: linear-gradient(90deg, #E6E6E6 0%, #B3B3B3 100%);
+  .text-gradient-dark {
+    background: linear-gradient(135deg, #0A1628 0%, #1E3A6A 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-  }
-
-  .text-gradient-blue {
-    @apply bg-gradient-to-r from-cyan-200 to-cyan-400 bg-clip-text text-transparent;
   }
 
   /* ── Buttons ────────────────────────────────────────────────── */
+  /* Primary: Deep Navy — solid, tactile, authoritative */
   .btn-primary {
-    @apply bg-orange-400 hover:bg-orange-500 text-white font-semibold px-6 py-3 rounded-xl
-           transition-all duration-300 hover:shadow-glow-copper hover:-translate-y-0.5 active:translate-y-0;
+    background: linear-gradient(135deg, #0A1628 0%, #162B52 100%);
+    color: #FFFFFF;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    border-radius: 0.25rem;
+    border: none;
+    box-shadow: 0 4px 20px rgba(10, 22, 40, 0.35), inset 0 1px 0 rgba(255,255,255,0.08);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
   }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(10, 22, 40, 0.45), inset 0 1px 0 rgba(255,255,255,0.12);
+  }
+  .btn-primary:active { transform: translateY(0); }
+
+  /* Gold CTA — champagne gold, premium */
+  .btn-gold {
+    background: linear-gradient(135deg, #B8943F 0%, #CDB97E 50%, #B8943F 100%);
+    background-size: 200% 100%;
+    color: #0A1628;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    border-radius: 0.25rem;
+    border: none;
+    box-shadow: 0 4px 20px rgba(184, 148, 63, 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: all 0.3s ease;
+    animation: gold-shimmer 4s ease infinite;
+  }
+  .btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(184, 148, 63, 0.55);
+    background-position: right center;
+  }
+
+  /* Outline — clean, elegant */
+  .btn-outline-navy {
+    background: transparent;
+    color: #0A1628;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.8125rem 1.875rem;
+    border-radius: 0.25rem;
+    border: 1.5px solid #0A1628;
+    transition: all 0.25s ease;
+  }
+  .btn-outline-navy:hover {
+    background: #0A1628;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+  }
+
+  /* Glass pill — for secondary actions */
+  .btn-glass-light {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    color: #0A1628;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(10, 22, 40, 0.12);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.2s ease;
+  }
+  .btn-glass-light:hover {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+  }
+
+  /* Legacy compat */
   .btn-secondary {
-    @apply bg-white/5 backdrop-blur-md border border-white/10 text-white font-semibold px-6 py-3 rounded-xl
-           transition-all duration-300 hover:bg-white/10 hover:-translate-y-0.5;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    color: #0A1628;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(10, 22, 40, 0.12);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.2s ease;
   }
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+  }
+
   .btn-outline {
-    @apply border-2 border-orange-400 text-orange-400 font-semibold px-6 py-3 rounded-xl
-           transition-all duration-300 hover:bg-orange-400 hover:text-white hover:-translate-y-0.5;
+    background: transparent;
+    color: #0A1628;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.8125rem 1.875rem;
+    border-radius: 0.25rem;
+    border: 1.5px solid #0A1628;
+    transition: all 0.25s ease;
   }
+  .btn-outline:hover {
+    background: #0A1628;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+  }
+
   .btn-cyan {
-    @apply bg-cyan-400 hover:bg-cyan-500 text-navy-950 font-semibold px-6 py-3 rounded-xl
-           transition-all duration-300 hover:shadow-glow-cyan hover:-translate-y-0.5;
+    background: linear-gradient(135deg, #B8943F 0%, #CDB97E 50%, #B8943F 100%);
+    background-size: 200% 100%;
+    color: #0A1628;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    border-radius: 0.25rem;
+    border: none;
+    box-shadow: 0 4px 20px rgba(184, 148, 63, 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: all 0.3s ease;
+    animation: gold-shimmer 4s ease infinite;
+  }
+  .btn-cyan:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(184, 148, 63, 0.55);
+    background-position: right center;
   }
 
   /* ── Cards ──────────────────────────────────────────────────── */
   .card-glass {
-    @apply bg-white/3 backdrop-blur-md border border-white/5 rounded-2xl p-6
-           transition-all duration-300 hover:bg-white/6 hover:shadow-card-hover;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(172, 130, 64, 0.12);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .card-glass:hover {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(184,148,63,0.18);
+    transform: translateY(-3px);
   }
   .car-card {
-    @apply bg-navy-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden
-           transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1 hover:border-orange-400/20;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .car-card:hover {
+    box-shadow: 0 16px 48px rgba(0,0,0,0.13);
+    transform: translateY(-4px);
+    border-color: rgba(184,148,63,0.3);
   }
 
   /* ── Badges ─────────────────────────────────────────────────── */
   .badge-certified {
-    @apply bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold px-3 py-1 rounded-full;
+    background: rgba(5, 150, 105, 0.1);
+    color: #047857;
+    border: 1px solid rgba(5, 150, 105, 0.25);
+    @apply text-xs font-semibold px-3 py-1 rounded-full;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.04em;
   }
   .badge-new {
-    background: rgba(197, 159, 109, 0.15);
-    color: #C59F6D;
-    border: 1px solid rgba(197, 159, 109, 0.3);
+    background: rgba(184, 148, 63, 0.1);
+    color: #9E7A38;
+    border: 1px solid rgba(184, 148, 63, 0.3);
     @apply text-xs font-semibold px-3 py-1 rounded-full;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.04em;
   }
   .badge-sold {
-    @apply bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-semibold px-3 py-1 rounded-full;
+    background: rgba(239, 68, 68, 0.1);
+    color: #DC2626;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    @apply text-xs font-semibold px-3 py-1 rounded-full;
   }
   .badge-negotiable {
-    background: rgba(230, 230, 230, 0.12);
-    color: #E6E6E6;
-    border: 1px solid rgba(230, 230, 230, 0.25);
+    background: rgba(10, 22, 40, 0.06);
+    color: #1E3A6A;
+    border: 1px solid rgba(10, 22, 40, 0.12);
     @apply text-xs font-semibold px-3 py-1 rounded-full;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.04em;
   }
 
   /* ── Layout ─────────────────────────────────────────────────── */
@@ -148,53 +316,85 @@
 
   /* ── Inputs ─────────────────────────────────────────────────── */
   .input-dark {
-    @apply bg-navy-900 border border-white/6 text-white placeholder-platinum-500 rounded-xl px-4 py-3
-           focus:outline-none focus:border-orange-400 focus:ring-1 transition-all duration-200;
-    --tw-ring-color: rgba(197, 159, 109, 0.2);
+    background: #FFFFFF;
+    border: 1.5px solid rgba(0,0,0,0.1);
+    color: #0F1117;
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+  }
+  .input-dark::placeholder { color: #9CA3AF; }
+  .input-dark:focus {
+    outline: none;
+    border-color: #B8943F;
+    box-shadow: 0 0 0 3px rgba(184, 148, 63, 0.12);
   }
 
   /* ── Shimmer ────────────────────────────────────────────────── */
   .shimmer {
-    background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.02) 100%);
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
     background-size: 200% 100%;
     animation: shimmer 2s linear infinite;
   }
 
   /* ── Navigation ─────────────────────────────────────────────── */
-  .nav-link { @apply text-platinum-300 hover:text-orange-400 transition-colors duration-200 font-medium text-sm; }
-  .nav-link.active { @apply text-orange-400; }
-
-  /* ── Hero particles — gold glow ───────────────────────────── */
-  .particle {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(197, 159, 109, 0.08);
-    animation: float var(--duration, 3s) ease-in-out infinite;
-    animation-delay: var(--delay, 0s);
+  .nav-link {
+    color: #3D4460;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    transition: color 0.2s ease;
   }
+  .nav-link:hover  { color: #0A1628; }
+  .nav-link.active { color: #B8943F; font-weight: 600; }
 
   /* ── Admin sidebar ──────────────────────────────────────────── */
   .admin-nav-item {
-    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-platinum-400
-           hover:text-white hover:bg-white/5 transition-all duration-200 text-sm font-medium;
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl
+           hover:bg-orange-50 transition-all duration-200 text-sm font-medium;
+    color: #4B5563;
+    font-family: 'Outfit', sans-serif;
   }
+  .admin-nav-item:hover { color: #0A1628; }
   .admin-nav-item.active {
-    background: rgba(197, 159, 109, 0.08);
-    color: #C59F6D;
-    border: 1px solid rgba(197, 159, 109, 0.2);
+    background: rgba(184, 148, 63, 0.1);
+    color: #9E7A38;
+    border: 1px solid rgba(184, 148, 63, 0.2);
   }
 
   /* ── Step indicators ────────────────────────────────────────── */
   .step-indicator { @apply w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300; }
-  .step-active    { background: #C59F6D; @apply text-white; box-shadow: 0 0 20px rgba(197,159,109,0.4); }
-  .step-completed { @apply bg-emerald-500 text-white; }
-  .step-pending   { @apply bg-navy-800 text-platinum-400 border border-white/10; }
+  .step-active    { background: #0A1628; color: white; box-shadow: 0 0 0 4px rgba(10,22,40,0.15); }
+  .step-completed { background: #B8943F; color: white; box-shadow: 0 0 0 4px rgba(184,148,63,0.15); }
+  .step-pending   { background: #F3F0E8; color: #9CA3AF; border: 1.5px solid #DDD7C8; }
 
-  /* ── Cyan beam accent ────────────────────────────────────────── */
+  /* ── Divider beam ────────────────────────────────────────────── */
   .cyan-beam {
-    background: linear-gradient(90deg, transparent 0%, #E6E6E6 40%, #CCCCCC 60%, transparent 100%);
-    height: 2px;
-    @apply animate-cyan-pulse;
+    background: linear-gradient(90deg, transparent 0%, #CDB97E 40%, #B8943F 60%, transparent 100%);
+    height: 1px;
+  }
+
+  /* ── Section label ───────────────────────────────────────────── */
+  .section-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #B8943F;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-label::before,
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 2rem;
+    height: 1px;
+    background: #CDB97E;
   }
 }
 
@@ -212,9 +412,9 @@
   /* Bengali font */
   .font-bengali { font-family: 'Noto Sans Bengali', sans-serif; }
 
-  /* Copper glow helper */
-  .copper-glow { box-shadow: 0 0 30px rgba(197, 159, 109, 0.4); }
-  .cyan-glow   { box-shadow: 0 0 25px rgba(230, 230, 230, 0.35); }
+  /* Showroom depth shadow */
+  .showroom-shadow { box-shadow: 0 20px 80px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06); }
+  .gold-ring       { box-shadow: 0 0 0 3px rgba(184, 148, 63, 0.35); }
 }
 
 /* ── Custom animations ─────────────────────────────────────── */
@@ -225,7 +425,7 @@
 }
 .animate-gradient {
   background-size: 200% 200%;
-  animation: gradient-shift 4s ease infinite;
+  animation: gradient-shift 5s ease infinite;
 }
 
 @keyframes count-up {
@@ -241,21 +441,40 @@
 .image-reveal { animation: image-reveal 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards; }
 
 @keyframes whatsapp-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
-  50%       { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+  50%       { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
 }
-.whatsapp-btn { animation: whatsapp-pulse 2s ease-in-out infinite; }
+.whatsapp-btn { animation: whatsapp-pulse 2.5s ease-in-out infinite; }
 
-@keyframes copper-shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
+@keyframes gold-shimmer {
+  0%   { background-position: 0% center; }
+  50%  { background-position: 100% center; }
+  100% { background-position: 0% center; }
 }
-.copper-text-shimmer {
-  background: linear-gradient(90deg, #A97E4E, #C59F6D, #FFFDFB, #C59F6D, #A97E4E);
-  background-size: 200% auto;
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-16px) rotate(1deg); }
+}
+.float-slow { animation: float-slow 6s ease-in-out infinite; }
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fade-up 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+/* Luxury shimmer on gold text */
+.gold-text-shimmer {
+  background: linear-gradient(90deg, #8A6420, #CDB97E, #FAF0DC, #CDB97E, #8A6420);
+  background-size: 300% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: copper-shimmer 4s linear infinite;
+  animation: gold-shimmer 5s linear infinite;
 }
-

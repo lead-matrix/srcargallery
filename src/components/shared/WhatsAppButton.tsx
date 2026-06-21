@@ -7,7 +7,7 @@ export default function WhatsAppButton() {
       <a
         href="tel:+8801401238019"
         aria-label="Call SR Car Gallery"
-        className="flex items-center justify-center w-12 h-12 rounded-full bg-navy-700 border border-white/10 text-white shadow-glass hover:bg-navy-600 hover:-translate-y-0.5 transition-all duration-300"
+        className="flex items-center justify-center w-12 h-12 rounded-full bg-[#0A1628] border border-[#B8943F]/25 text-white shadow-md hover:bg-[#162B52] hover:-translate-y-0.5 transition-all duration-300"
       >
         <Phone className="w-5 h-5" />
       </a>

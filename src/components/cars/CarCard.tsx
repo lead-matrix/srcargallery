@@ -35,29 +35,29 @@ export default function CarCard({ car, onFavorite, isFavorited = false, index = 
       transition={{ duration: 0.4, delay: index * 0.05 }}
       className="car-card group"
     >
-      {/* Image */}
+      {/* Image Container */}
       <div className="relative overflow-hidden h-52">
         <img
           src={thumbnail}
           alt={car.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           loading="lazy"
         />
 
-        {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-transparent to-transparent" />
+        {/* Soft elegant overlay gradient for text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent pointer-events-none" />
 
-        {/* Top badges */}
-        <div className="absolute top-3 left-3 flex gap-2">
+        {/* Top Badges */}
+        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
           {car.certified && (
-            <Badge variant="certified" className="flex items-center gap-1">
-              <ShieldCheck className="w-3 h-3" />
+            <Badge variant="certified" className="flex items-center gap-1 shadow-sm">
+              <ShieldCheck className="w-3 h-3 fill-current text-emerald-600" />
               {bn ? 'সার্টিফাইড' : 'Certified'}
             </Badge>
           )}
-          {car.just_arrived && <Badge variant="new">{bn ? 'নতুন' : 'Just Arrived'}</Badge>}
+          {car.just_arrived && <Badge variant="new" className="shadow-sm">{bn ? 'নতুন' : 'Just Arrived'}</Badge>}
           {statusBadge}
-          {car.fuel_type === 'hybrid' && <Badge variant="hybrid">{bn ? 'হাইব্রিড' : 'Hybrid'}</Badge>}
+          {car.fuel_type === 'hybrid' && <Badge variant="hybrid" className="shadow-sm">{bn ? 'হাইব্রিড' : 'Hybrid'}</Badge>}
         </div>
 
         {/* Favorite button */}
@@ -66,10 +66,10 @@ export default function CarCard({ car, onFavorite, isFavorited = false, index = 
             e.preventDefault()
             onFavorite?.(car.id)
           }}
-          className={`absolute top-3 right-3 w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 ${
+          className={`absolute top-3 right-3 w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 shadow-sm ${
             isFavorited
-              ? 'bg-red-500 text-white shadow-lg'
-              : 'bg-navy-900/70 text-platinum-400 hover:bg-red-500/20 hover:text-red-400'
+              ? 'bg-red-500 text-white'
+              : 'bg-white/90 text-[#3D4460] hover:bg-red-50 hover:text-red-500'
           }`}
           aria-label="Save to favorites"
         >
@@ -79,26 +79,26 @@ export default function CarCard({ car, onFavorite, isFavorited = false, index = 
         {/* Negotiable badge */}
         {car.negotiable && (
           <div className="absolute bottom-3 right-3">
-            <Badge variant="negotiable">{bn ? 'আলোচনা সাপেক্ষ' : 'Negotiable'}</Badge>
+            <Badge variant="negotiable" className="shadow-sm">{bn ? 'আলোচনা সাপেক্ষ' : 'Negotiable'}</Badge>
           </div>
         )}
       </div>
 
       {/* Content */}
-      <div className="p-5">
+      <div className="p-5 bg-white">
         {/* Title & Price */}
         <div className="flex items-start justify-between mb-3">
           <div className="flex-1 min-w-0 pr-2">
-            <h3 className="font-heading font-bold text-white text-lg leading-tight truncate group-hover:text-orange-400 transition-colors">
+            <h3 className="font-heading font-extrabold text-[#0A1628] text-lg leading-tight truncate group-hover:text-[#B8943F] transition-colors">
               {bn && car.title_bn ? car.title_bn : car.title}
             </h3>
           </div>
           <div className="text-right flex-shrink-0">
-            <div className="font-heading font-black text-orange-400 text-xl">
+            <div className="font-heading font-black text-[#B8943F] text-xl">
               {bn ? `৳${(car.price / 100000).toFixed(0)} লাখ` : formatPriceEn(car.price)}
             </div>
             {car.negotiable && (
-              <div className={`text-xs text-platinum-500 ${bn ? 'font-bengali' : ''}`}>
+              <div className={`text-[10px] font-bold text-[#8C8C8C] uppercase tracking-wider ${bn ? 'font-bengali' : ''}`}>
                 {bn ? 'আলোচনা সাপেক্ষ' : 'Negotiable'}
               </div>
             )}
@@ -106,27 +106,27 @@ export default function CarCard({ car, onFavorite, isFavorited = false, index = 
         </div>
 
         {/* Specs grid */}
-        <div className="grid grid-cols-2 gap-2 mb-4">
-          <div className="flex items-center gap-2 text-sm text-platinum-400">
-            <Calendar className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
+        <div className="grid grid-cols-2 gap-2 mb-4 border-t border-[#B8943F]/10 pt-3">
+          <div className="flex items-center gap-2 text-sm text-[#3D4460] font-medium">
+            <Calendar className="w-3.5 h-3.5 text-[#B8943F] flex-shrink-0" />
             <span className={bn ? 'font-bengali' : ''}>
               {bn ? `${car.year} সাল` : car.year}
             </span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-platinum-400">
-            <Gauge className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
+          <div className="flex items-center gap-2 text-sm text-[#3D4460] font-medium">
+            <Gauge className="w-3.5 h-3.5 text-[#B8943F] flex-shrink-0" />
             <span className={bn ? 'font-bengali' : ''}>
               {bn ? formatMileage(car.mileage).replace('km', 'কিমি') : formatMileage(car.mileage)}
             </span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-platinum-400">
-            <Fuel className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
+          <div className="flex items-center gap-2 text-sm text-[#3D4460] font-medium">
+            <Fuel className="w-3.5 h-3.5 text-[#B8943F] flex-shrink-0" />
             <span className={`capitalize ${bn ? 'font-bengali' : ''}`}>
               {bn ? (car.fuel_type === 'petrol' ? 'অকটেন' : car.fuel_type === 'hybrid' ? 'হাইব্রিড' : 'ডিজেল') : car.fuel_type}
             </span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-platinum-400">
-            <Settings className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" />
+          <div className="flex items-center gap-2 text-sm text-[#3D4460] font-medium">
+            <Settings className="w-3.5 h-3.5 text-[#B8943F] flex-shrink-0" />
             <span className={`capitalize ${bn ? 'font-bengali' : ''}`}>
               {bn ? (car.transmission === 'automatic' ? 'অটোমেটিক' : 'ম্যানুয়াল') : car.transmission}
             </span>
@@ -134,14 +134,14 @@ export default function CarCard({ car, onFavorite, isFavorited = false, index = 
         </div>
 
         {/* Location */}
-        <div className={`flex items-center gap-2 text-xs text-platinum-500 mb-4 ${bn ? 'font-bengali' : ''}`}>
-          <MapPin className="w-3 h-3" />
+        <div className={`flex items-center gap-2 text-xs text-[#8C8C8C] font-semibold mb-4 ${bn ? 'font-bengali' : ''}`}>
+          <MapPin className="w-3.5 h-3.5 text-[#B8943F]" />
           <span>{bn ? 'আগারগাঁও তালতলা, ঢাকা' : 'Agargaon Taltola, Dhaka'}</span>
         </div>
 
         {/* Actions */}
         <div className="flex gap-2">
-          <Button asChild className="flex-1 text-sm" size="sm">
+          <Button asChild className="flex-1 text-sm btn-primary" size="sm">
             <Link to={`/cars/${car.id}`} className={bn ? 'font-bengali' : ''}>
               {tr.cars_view_details}
               <ArrowRight className="w-3.5 h-3.5" />

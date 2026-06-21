@@ -74,18 +74,18 @@ export default function HowItWorks() {
         className="flex items-start gap-4"
       >
         <div className="flex-shrink-0">
-          <div className="w-14 h-14 rounded-2xl bg-orange-500 text-white flex items-center justify-center font-heading font-black text-lg shadow-glow-orange">
+          <div className="w-12 h-12 rounded-xl bg-[#0A1628] text-white flex items-center justify-center font-heading font-black text-base shadow-sm">
             {step.step}
           </div>
         </div>
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <Icon className="w-4 h-4 text-orange-400" />
-            <h4 className={`font-heading font-bold text-white ${bn ? 'font-bengali' : ''}`}>
+            <Icon className="w-4 h-4 text-[#B8943F]" />
+            <h4 className={`font-heading font-extrabold text-[#0A1628] text-base ${bn ? 'font-bengali' : ''}`}>
               {bn ? step.title_bn : step.title}
             </h4>
           </div>
-          <p className={`text-platinum-400 text-sm leading-relaxed ${bn ? 'font-bengali' : ''}`}>
+          <p className={`text-[#3D4460] text-sm leading-relaxed ${bn ? 'font-bengali' : ''}`}>
             {bn ? step.desc_bn : step.desc}
           </p>
         </div>
@@ -94,19 +94,21 @@ export default function HowItWorks() {
   }
 
   return (
-    <section className="section-padding bg-navy-900">
+    <section className="section-padding bg-[#FAF8F4]">
       <div className="container-custom">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className={`text-orange-400 text-sm font-semibold tracking-widest uppercase ${bn ? 'font-bengali' : ''}`}>
+          <span className={`text-[#B8943F] text-xs font-bold tracking-widest uppercase ${bn ? 'font-bengali' : ''} flex items-center justify-center gap-2`}>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#B8943F]" />
             {tr.how_title}
+            <span className="w-1.5 h-1.5 rounded-full bg-[#B8943F]" />
           </span>
-          <h2 className={`font-heading text-4xl md:text-5xl font-black text-white mt-3 mb-4 ${bn ? 'font-bengali' : ''}`}>
+          <h2 className={`font-heading text-4xl md:text-5xl font-black text-[#0A1628] mt-3 mb-4 ${bn ? 'font-bengali' : ''}`}>
             {bn ? (
               <>সহজ। দ্রুত। <span className="text-gradient">স্বচ্ছ।</span></>
             ) : (
@@ -115,15 +117,15 @@ export default function HowItWorks() {
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-8">
           {/* Seller */}
-          <div className="glass rounded-3xl p-8 border border-white/8">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-500/30 flex items-center justify-center text-orange-400">
+          <div className="bg-white border border-[#B8943F]/12 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all duration-300">
+            <div className="flex items-center gap-3 mb-8 border-b border-[#B8943F]/10 pb-4">
+              <div className="w-10 h-10 rounded-xl bg-[#B8943F]/10 border border-[#B8943F]/20 flex items-center justify-center text-[#B8943F]">
                 <ArrowRight className="w-5 h-5" />
               </div>
               <div>
-                <h3 className={`font-heading font-bold text-white text-xl ${bn ? 'font-bengali' : ''}`}>
+                <h3 className={`font-heading font-extrabold text-[#0A1628] text-xl ${bn ? 'font-bengali' : ''}`}>
                   {tr.svc_sell_title}
                 </h3>
               </div>
@@ -140,13 +142,13 @@ export default function HowItWorks() {
           </div>
 
           {/* Buyer */}
-          <div className="glass rounded-3xl p-8 border border-white/8">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+          <div className="bg-white border border-[#B8943F]/12 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all duration-300">
+            <div className="flex items-center gap-3 mb-8 border-b border-[#B8943F]/10 pb-4">
+              <div className="w-10 h-10 rounded-xl bg-[#0A1628]/10 border border-[#0A1628]/20 flex items-center justify-center text-[#0A1628]">
                 <Search className="w-5 h-5" />
               </div>
               <div>
-                <h3 className={`font-heading font-bold text-white text-xl ${bn ? 'font-bengali' : ''}`}>
+                <h3 className={`font-heading font-extrabold text-[#0A1628] text-xl ${bn ? 'font-bengali' : ''}`}>
                   {tr.svc_buy_title}
                 </h3>
               </div>

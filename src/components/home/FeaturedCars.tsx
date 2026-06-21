@@ -25,11 +25,11 @@ export default function FeaturedCars() {
   }
 
   return (
-    <section className="section-padding bg-navy-900">
+    <section className="section-padding bg-[#FAF8F4]">
       <div className="container-custom">
         {/* Just Arrived */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
@@ -37,12 +37,12 @@ export default function FeaturedCars() {
         >
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="w-5 h-5 text-orange-400" />
-              <span className={`text-orange-400 text-sm font-semibold tracking-widest uppercase ${bn ? 'font-bengali' : ''}`}>
+              <Sparkles className="w-5 h-5 text-[#B8943F]" />
+              <span className={`text-[#B8943F] text-xs font-bold tracking-widest uppercase ${bn ? 'font-bengali' : ''}`}>
                 {bn ? 'নতুন আসা গাড়ি' : 'Just Arrived'}
               </span>
             </div>
-            <h2 className={`font-heading text-3xl md:text-4xl font-black text-white ${bn ? 'font-bengali' : ''}`}>
+            <h2 className={`font-heading text-3xl md:text-4xl font-black text-[#0A1628] ${bn ? 'font-bengali' : ''}`}>
               {bn ? (
                 <>সদ্য যুক্ত হওয়া <span className="text-gradient">যানবাহনসমূহ</span></>
               ) : (
@@ -52,7 +52,7 @@ export default function FeaturedCars() {
           </div>
           <Link
             to="/cars?just_arrived=true"
-            className={`hidden md:flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-colors font-medium ${bn ? 'font-bengali' : ''}`}
+            className={`hidden md:flex items-center gap-2 text-[#9E7A38] hover:text-[#0A1628] transition-colors font-bold ${bn ? 'font-bengali' : ''}`}
           >
             {bn ? 'সব দেখুন' : 'View All'}
             <ArrowRight className="w-4 h-4" />
@@ -73,17 +73,18 @@ export default function FeaturedCars() {
 
         {/* Featured */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="flex items-center justify-between mb-8"
         >
           <div>
-            <span className={`text-orange-400 text-sm font-semibold tracking-widest uppercase ${bn ? 'font-bengali' : ''}`}>
+            <span className={`text-[#B8943F] text-xs font-bold tracking-widest uppercase ${bn ? 'font-bengali' : ''} flex items-center gap-2`}>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#B8943F]" />
               {tr.featured_title}
             </span>
-            <h2 className={`font-heading text-3xl md:text-4xl font-black text-white mt-2 ${bn ? 'font-bengali' : ''}`}>
+            <h2 className={`font-heading text-3xl md:text-4xl font-black text-[#0A1628] mt-2 ${bn ? 'font-bengali' : ''}`}>
               {bn ? (
                 <>বিশেষভাবে <span className="text-gradient">নির্বাচিত</span></>
               ) : (
@@ -93,7 +94,7 @@ export default function FeaturedCars() {
           </div>
           <Link
             to="/cars"
-            className={`hidden md:flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-colors font-medium ${bn ? 'font-bengali' : ''}`}
+            className={`hidden md:flex items-center gap-2 text-[#9E7A38] hover:text-[#0A1628] transition-colors font-bold ${bn ? 'font-bengali' : ''}`}
           >
             {tr.featured_view_all}
             <ArrowRight className="w-4 h-4" />
