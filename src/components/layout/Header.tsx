@@ -75,17 +75,29 @@ export default function Header() {
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
           <div className="flex items-center justify-between h-18 py-2">
-            {/* Logo — actual brand image */}
-            <Link to="/" className="flex items-center gap-2 group" aria-label="SR Car Gallery Home">
-              <img
-                src="/logo.png"
-                alt="SR Car Gallery"
-                className="h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-lg"
-                style={{ filter: 'drop-shadow(0 0 8px rgba(232,137,42,0.25))' }}
-              />
-              <div className="hidden sm:block">
-                <div className="font-heading font-bold text-white text-lg leading-none tracking-wide">SR Car Gallery</div>
-                <div className="text-xs font-medium tracking-widest uppercase" style={{ color: '#E8892A' }}>A Curated Collection</div>
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-3 group" aria-label="SR Car Gallery Home">
+              {/* Logo mark — transparent PNG, no white bg */}
+              <div className="relative flex-shrink-0">
+                <img
+                  src="/logo.png"
+                  alt="SR Car Gallery"
+                  width={56}
+                  height={56}
+                  className="w-12 h-12 sm:w-14 sm:h-14 object-contain group-hover:scale-105 transition-transform duration-300"
+                  style={{
+                    filter: 'drop-shadow(0 2px 8px rgba(232,137,42,0.4)) drop-shadow(0 0 3px rgba(0,212,255,0.2))',
+                  }}
+                />
+              </div>
+              {/* Wordmark — hidden on very small screens */}
+              <div className="hidden xs:block sm:block">
+                <div className="font-heading font-bold text-white text-base sm:text-lg leading-none tracking-wide whitespace-nowrap">
+                  SR Car Gallery
+                </div>
+                <div className="text-[10px] sm:text-xs font-semibold tracking-[0.15em] uppercase mt-0.5" style={{ color: '#E8892A' }}>
+                  A Curated Collection
+                </div>
               </div>
             </Link>
 

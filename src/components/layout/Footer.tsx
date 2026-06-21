@@ -55,7 +55,7 @@ export default function Footer() {
   return (
     <footer className="bg-navy-950 border-t border-white/5">
       {/* CTA Banner */}
-      <div className="bg-gradient-to-r from-orange-600 to-orange-500 py-12 px-4">
+      <div className="py-12 px-4" style={{ background: 'linear-gradient(135deg, #C4762A 0%, #E8892A 50%, #C4762A 100%)' }}>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className={`font-heading text-2xl font-bold text-white ${bn ? 'font-bengali' : ''}`}>
@@ -89,13 +89,18 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-700 rounded-xl flex items-center justify-center font-heading font-black text-white text-xl shadow-glow-orange">
-                SR
-              </div>
+            <Link to="/" className="flex items-center gap-3 mb-6" aria-label="SR Car Gallery Home">
+              <img
+                src="/logo.png"
+                alt="SR Car Gallery"
+                width={52}
+                height={52}
+                className="w-12 h-12 object-contain flex-shrink-0"
+                style={{ filter: 'drop-shadow(0 2px 6px rgba(232,137,42,0.35))' }}
+              />
               <div>
-                <div className="font-heading font-bold text-white text-lg">SR Car Gallery</div>
-                <div className="text-orange-400 text-xs">A Curated Collection</div>
+                <div className="font-heading font-bold text-white text-lg leading-none">SR Car Gallery</div>
+                <div className="text-xs font-semibold tracking-widest uppercase mt-1" style={{ color: '#E8892A' }}>A Curated Collection</div>
               </div>
             </Link>
             <p className={`text-platinum-400 text-sm leading-relaxed mb-6 ${bn ? 'font-bengali' : ''}`}>
