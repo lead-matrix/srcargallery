@@ -40,7 +40,7 @@ export default function Hero() {
         vy: (Math.random() - 0.5) * 0.3,
         size: Math.random() * 2 + 0.5,
         opacity: Math.random() * 0.4 + 0.1,
-        color: Math.random() > 0.6 ? '#FF6B35' : '#415693',
+        color: Math.random() > 0.6 ? '#C59F6D' : '#E6E6E6',
       })
     }
 
@@ -56,7 +56,7 @@ export default function Hero() {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(255, 107, 53, ${(1 - dist / 120) * 0.08})`
+            ctx.strokeStyle = `rgba(197, 159, 109, ${(1 - dist / 120) * 0.08})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
@@ -102,8 +102,8 @@ export default function Hero() {
       />
 
       {/* Background gradient orbs */}
-      <div className="absolute top-1/4 -left-40 w-80 h-80 bg-orange-500/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-40 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/4 -left-40 w-80 h-80 bg-orange-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-40 w-96 h-96 bg-cyan-400/5 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 lg:px-16 pt-20 pb-12">

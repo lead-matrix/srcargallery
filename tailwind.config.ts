@@ -20,47 +20,47 @@ const config: Config = {
     extend: {
       colors: {
         // ── SR Car Gallery Design System ─────────────────────────────
-        // Gunmetal / Charcoal (replaces navy)
+        // Obsidian & Charcoal scale (navy)
         navy: {
-          50:  '#E8E8E8',
-          100: '#C5C5C5',
-          200: '#A0A0A0',
-          300: '#7A7A7A',
-          400: '#555555',
-          500: '#333333',
-          600: '#222222',
-          700: '#1a1a1a',
-          800: '#111111',
-          900: '#0d0d0d',
+          50:  '#EAEAEA',
+          100: '#CCCCCC',
+          200: '#ACACAC',
+          300: '#7C7C7C',
+          400: '#4C4C4C',
+          500: '#2C2C2C',
+          600: '#1C1C1C',
+          700: '#121212',
+          800: '#0d0d0d',
+          900: '#080808',
           950: '#050505',
         },
-        // Copper / Bronze (primary accent — replaces orange)
+        // Champagne Gold / Rose Bronze scale (orange)
         orange: {
-          50:  '#FDF3E7',
-          100: '#FAE3C2',
-          200: '#F5C882',
-          300: '#EDAB4A',
-          400: '#E8892A',   // primary copper
-          500: '#C4762A',   // deeper copper
-          600: '#A05C1A',   // dark copper
-          700: '#7D4412',
-          800: '#5C300C',
-          900: '#3B1E07',
+          50:  '#FFFDFB',
+          100: '#FAF3E8',
+          200: '#F2DFC2',
+          300: '#E5C290',
+          400: '#C59F6D',   // Refined Champagne Gold
+          500: '#A97E4E',   // Shaded Warm Gold
+          600: '#8A5F32',
+          700: '#6B431F',
+          800: '#4D2B11',
+          900: '#2E1505',
         },
-        // Cyan / Electric Teal (secondary accent)
+        // Polished Chrome / Platinum scale (cyan)
         cyan: {
-          50:  '#E0FAFF',
-          100: '#B8F4FF',
-          200: '#7EEEFF',
-          300: '#3DE6FF',
-          400: '#00D4FF',   // primary cyan
-          500: '#00AACF',
-          600: '#0088A3',
-          700: '#006478',
-          800: '#00414E',
-          900: '#002028',
+          50:  '#FFFFFF',
+          100: '#FAFAFA',
+          200: '#F5F5F5',
+          300: '#F0F0F0',
+          400: '#E6E6E6',   // Chrome Highlight
+          500: '#CCCCCC',
+          600: '#999999',
+          700: '#4D4D4D',
+          800: '#333333',
+          900: '#1A1A1A',
         },
-        // Silver / Platinum text
+        // Silver text
         platinum: {
           50:  '#FFFFFF',
           100: '#F5F5F5',
@@ -119,13 +119,13 @@ const config: Config = {
       },
       fontFamily: {
         sans:    ['Inter', 'system-ui', 'sans-serif'],
-        heading: ['Poppins', 'system-ui', 'sans-serif'],
+        heading: ['Outfit', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'hero-gradient':   'linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #0d0d0d 100%)',
-        'copper-gradient': 'linear-gradient(135deg, #E8892A 0%, #C4762A 50%, #B87333 100%)',
-        'card-gradient':   'linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)',
+        'hero-gradient':   'linear-gradient(180deg, #050505 0%, #0d0d0d 100%)',
+        'copper-gradient': 'linear-gradient(135deg, #C59F6D 0%, #A97E4E 50%, #8A5F32 100%)',
+        'card-gradient':   'linear-gradient(145deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.005) 100%)',
       },
       animation: {
         'accordion-down':  'accordion-down 0.2s ease-out',
@@ -166,12 +166,12 @@ const config: Config = {
           '50%':      { transform: 'translateY(-10px)' },
         },
         'pulse-glow': {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(232, 137, 42, 0.35)' },
-          '50%':      { boxShadow: '0 0 45px rgba(232, 137, 42, 0.65)' },
+          '0%, 100%': { boxShadow: '0 0 20px rgba(197, 159, 109, 0.25)' },
+          '50%':      { boxShadow: '0 0 45px rgba(197, 159, 109, 0.45)' },
         },
         'cyan-pulse': {
-          '0%, 100%': { boxShadow: '0 0 15px rgba(0, 212, 255, 0.3)' },
-          '50%':      { boxShadow: '0 0 35px rgba(0, 212, 255, 0.6)' },
+          '0%, 100%': { boxShadow: '0 0 15px rgba(230, 230, 230, 0.2)' },
+          '50%':      { boxShadow: '0 0 35px rgba(230, 230, 230, 0.4)' },
         },
         'shimmer': {
           '0%':   { backgroundPosition: '-200% 0' },
@@ -182,12 +182,12 @@ const config: Config = {
         xs: '2px',
       },
       boxShadow: {
-        'glow-orange': '0 0 30px rgba(232, 137, 42, 0.35)',
-        'glow-copper': '0 0 30px rgba(196, 118, 42, 0.4)',
-        'glow-cyan':   '0 0 30px rgba(0, 212, 255, 0.3)',
-        'glow-blue':   '0 0 30px rgba(0, 170, 207, 0.3)',
-        'card-hover':  '0 20px 60px rgba(0, 0, 0, 0.5)',
-        'glass':       '0 8px 32px rgba(0, 0, 0, 0.4)',
+        'glow-orange': '0 0 30px rgba(197, 159, 109, 0.3)',
+        'glow-copper': '0 0 30px rgba(169, 126, 78, 0.35)',
+        'glow-cyan':   '0 0 30px rgba(230, 230, 230, 0.25)',
+        'glow-blue':   '0 0 30px rgba(200, 200, 200, 0.25)',
+        'card-hover':  '0 20px 60px rgba(0, 0, 0, 0.6)',
+        'glass':       '0 8px 32px rgba(0, 0, 0, 0.5)',
       },
     },
   },
