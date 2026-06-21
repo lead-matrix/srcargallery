@@ -27,3 +27,5 @@ dist-ssr
 *.tsbuildinfo
 *.tsbuildinfo.old
 
+
+.vercel

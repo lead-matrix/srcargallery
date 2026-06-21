@@ -44,14 +44,15 @@ export default function Header() {
 
   return (
     <>
-      {/* Top bar */}
-      <div className="bg-orange-500 text-white text-xs py-2 px-4 hidden md:flex items-center justify-between">
-        <span className={lang === 'bn' ? 'font-bengali' : ''}>
+      {/* Top bar — copper brand strip */}
+      <div className="text-white text-xs py-2 px-4 hidden md:flex items-center justify-between"
+           style={{ background: 'linear-gradient(90deg, #1a1a1a 0%, #222 50%, #1a1a1a 100%)', borderBottom: '1px solid rgba(232,137,42,0.3)' }}>
+        <span className={lang === 'bn' ? 'font-bengali' : ''} style={{ color: '#ABABAB' }}>
           {lang === 'bn'
             ? 'ঢাকার বিশ্বস্ত গাড়ির শোরুম | D-19 B, Agargaon Taltola, Dhaka-1207'
             : "Dhaka's trusted car showroom | D-19 B, Agargaon Taltola, Dhaka-1207"}
         </span>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4" style={{ color: '#E8892A' }}>
           <a href="tel:+8801401238019" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
             <Phone className="w-3 h-3" />
             <span>+880 1401-238019</span>
@@ -67,23 +68,24 @@ export default function Header() {
         className={cn(
           'sticky top-0 z-50 w-full transition-all duration-500',
           isScrolled
-            ? 'bg-navy-900/95 backdrop-blur-lg border-b border-white/5 shadow-glass'
-            : 'bg-navy-900/80 backdrop-blur-sm'
+            ? 'bg-navy-900/95 backdrop-blur-lg shadow-glass'
+            : 'bg-navy-900/80 backdrop-blur-sm',
         )}
+        style={isScrolled ? { borderBottom: '1px solid rgba(232,137,42,0.15)' } : {}}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
-          <div className="flex items-center justify-between h-18 py-3">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="relative">
-                <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-700 rounded-xl flex items-center justify-center font-heading font-black text-white text-lg shadow-glow-orange group-hover:scale-105 transition-transform duration-300">
-                  SR
-                </div>
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full border-2 border-navy-900"></div>
-              </div>
-              <div>
-                <div className="font-heading font-bold text-white text-lg leading-none">SR Car Gallery</div>
-                <div className="text-orange-400 text-xs font-medium">A Curated Collection</div>
+          <div className="flex items-center justify-between h-18 py-2">
+            {/* Logo — actual brand image */}
+            <Link to="/" className="flex items-center gap-2 group" aria-label="SR Car Gallery Home">
+              <img
+                src="/logo.png"
+                alt="SR Car Gallery"
+                className="h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-lg"
+                style={{ filter: 'drop-shadow(0 0 8px rgba(232,137,42,0.25))' }}
+              />
+              <div className="hidden sm:block">
+                <div className="font-heading font-bold text-white text-lg leading-none tracking-wide">SR Car Gallery</div>
+                <div className="text-xs font-medium tracking-widest uppercase" style={{ color: '#E8892A' }}>A Curated Collection</div>
               </div>
             </Link>
 
